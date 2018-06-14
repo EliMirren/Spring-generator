@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="348.0" prefWidth="723.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.szmirren.controller.AboutController">
+	<children>
+		<Label layoutX="276.0" layoutY="28.0" text=" :  Spring-generator-1.0.0">
+			<font>
+				<Font size="20.0" />
+			</font>
+		</Label>
+		<Label fx:id="lblInstructions" layoutX="50.0" layoutY="87.0" text="使用说明 : " AnchorPane.leftAnchor="50.0">
+			<font>
+				<Font size="20.0" />
+			</font>
+		</Label>
+		<Label fx:id="lblProjectPath" layoutX="50.0" layoutY="134.0" text="开源地址 : " AnchorPane.leftAnchor="50.0">
+			<font>
+				<Font size="20.0" />
+			</font>
+		</Label>
+		<Label fx:id="lblTemplatePath" layoutX="50.0" layoutY="182.0" text="模板仓库 : " AnchorPane.leftAnchor="50.0">
+			<font>
+				<Font size="20.0" />
+			</font>
+		</Label>
+		<Label fx:id="lblTalkGroupInQQ" layoutX="50.0" layoutY="229.0" text="QQ交流群 : " AnchorPane.leftAnchor="50.0">
+			<font>
+				<Font size="20.0" />
+			</font>
+		</Label>
+		<TextField fx:id="txtInstructions" layoutX="170.0" layoutY="88.0" prefHeight="29.0" prefWidth="443.0" text="http://szmirren.com/">
+			<font>
+				<Font size="14.0" />
+			</font>
+		</TextField>
+		<TextField fx:id="txtProjectPath" layoutX="170.0" layoutY="135.0" prefHeight="29.0" prefWidth="443.0" text="https://github.com/EliMirren/Spring-generator">
+			<font>
+				<Font size="14.0" />
+			</font>
+		</TextField>
+		<TextField fx:id="txtTemplatePath" layoutX="170.0" layoutY="183.0" prefHeight="29.0" prefWidth="443.0" text="https://github.com/EliMirren/Spring-generator-Template">
+			<font>
+				<Font size="14.0" />
+			</font>
+		</TextField>
+		<TextField fx:id="txtTalkGroupInQQ" layoutX="170.0" layoutY="230.0" prefHeight="29.0" prefWidth="443.0" text="519714660">
+			<font>
+				<Font size="14.0" />
+			</font>
+		</TextField>
+      <Label fx:id="lblVersion" layoutX="190.0" layoutY="28.0" text="当前版本">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblAuthorsEmail" layoutX="50.0" layoutY="278.0" text="作者邮箱 : " AnchorPane.leftAnchor="50.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtAuthorsEmail" layoutX="170.0" layoutY="277.0" prefHeight="29.0" prefWidth="443.0" text="690389491@qq.com">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+	</children>
+</AnchorPane>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fitToHeight="true" fitToWidth="true"
+	prefHeight="700.0" prefWidth="1180.0" stylesheets="@../css/style.css"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.szmirren.controller.SetEntityAttributeController">
+	<content>
+		<SplitPane dividerPositions="0.7202380952380952"
+			layoutX="276.0" layoutY="132.0" prefHeight="160.0" prefWidth="888.0"
+			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<items>
+				<AnchorPane minHeight="0.0" minWidth="0.0"
+					prefHeight="158.0" prefWidth="521.0">
+					<children>
+						<TableView fx:id="tblProperty" layoutY="8.0"
+							prefHeight="678.0" prefWidth="834.0"
+							AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0"
+							AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="8.0">
+							<columns>
+								<TableColumn fx:id="tdIsCreate" prefWidth="75.0"
+									text="是否创建" />
+								<TableColumn fx:id="tdColumn"
+									maxWidth="1.7976931348623157E308" minWidth="-1.0"
+									prefWidth="190.0" text="数据库列名" />
+								<TableColumn fx:id="tdSqlType"
+									maxWidth="1.7976931348623157E308" minWidth="-1.0"
+									prefWidth="190.0" text="SQL数据类型" />
+								<TableColumn fx:id="tdJavaType"
+									maxWidth="1.7976931348623157E308" minWidth="-1.0"
+									prefWidth="190.0" text="Java数据类型" />
+								<TableColumn fx:id="tdField" minWidth="0.0"
+									prefWidth="190.0" text="字段属性名" />
+							</columns>
+						</TableView>
+					</children>
+				</AnchorPane>
+				<AnchorPane fx:id="apRightPane" minHeight="0.0"
+					minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+					<children>
+						<Label fx:id="lblAddCustomProperty" layoutX="10.0"
+							layoutY="148.0" text="添加自定义字段 :" AnchorPane.leftAnchor="10.0"
+							AnchorPane.topAnchor="148.0">
+							<font>
+								<Font size="14.0" />
+							</font>
+						</Label>
+						<Label fx:id="lblKey" layoutX="12.0" layoutY="181.0"
+							text="类型 :" AnchorPane.leftAnchor="12.0"
+							AnchorPane.topAnchor="181.0">
+							<font>
+								<Font size="16.0" />
+							</font>
+						</Label>
+						<TextField fx:id="txtKey" layoutX="60.0" layoutY="177.0"
+							prefHeight="29.0" prefWidth="247.0" promptText="示例 : Animal"
+							AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="177.0">
+							<font>
+								<Font size="14.0" />
+							</font>
+						</TextField>
+						<Label fx:id="lblValue" layoutX="12.0" layoutY="221.0"
+							text="名称 :" AnchorPane.leftAnchor="12.0"
+							AnchorPane.topAnchor="221.0">
+							<font>
+								<Font size="16.0" />
+							</font>
+						</Label>
+						<TextField fx:id="txtValue" layoutX="60.0"
+							layoutY="217.0" prefHeight="29.0" prefWidth="247.0"
+							promptText="示例 : dog" AnchorPane.rightAnchor="18.0"
+							AnchorPane.topAnchor="217.0">
+							<font>
+								<Font size="14.0" />
+							</font>
+						</TextField>
+						<Button fx:id="btnAddProperty" layoutX="100.0"
+							layoutY="257.0" mnemonicParsing="false"
+							onAction="#onAddPropertyToTable" text="添加属性"
+							AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="94.0"
+							AnchorPane.topAnchor="257.0">
+							<styleClass>
+								<String fx:value="btn" />
+								<String fx:value="btn-executable" />
+							</styleClass>
+							<font>
+								<Font size="14.0" />
+							</font>
+						</Button>
+						<Separator layoutY="299.0" prefWidth="200.0"
+							AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+							AnchorPane.topAnchor="299.0" />
+						<Label fx:id="lblTemplate" layoutX="8.0" layoutY="382.0"
+							text="使用模板 :" AnchorPane.leftAnchor="8.0"
+							AnchorPane.topAnchor="382.0">
+							<font>
+								<Font size="16.0" />
+							</font>
+						</Label>
+						<ComboBox fx:id="cboTemplate" editable="true"
+							layoutX="8.0" layoutY="414.0" prefHeight="30.0" prefWidth="250.0"
+							promptText="请选择或输入模板的名称" AnchorPane.leftAnchor="8.0"
+							AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="414.0" />
+						<Button fx:id="btnConfirm" layoutX="77.0" layoutY="596.0"
+							mnemonicParsing="false" onAction="#onConfirm" text="确 定"
+							AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="77.0">
+							<styleClass>
+								<String fx:value="btn" />
+								<String fx:value="btn-success" />
+							</styleClass>
+							<font>
+								<Font size="16.0" />
+							</font>
+							<padding>
+								<Insets bottom="8.0" left="20.0" right="20.0" top="8.0" />
+							</padding>
+						</Button>
+						<Button fx:id="btnCancel" layoutX="178.0" layoutY="597.0"
+							mnemonicParsing="false" onAction="#onCancel" text="取 消"
+							AnchorPane.bottomAnchor="59.0">
+							<styleClass>
+								<String fx:value="btn" />
+								<String fx:value="btn-default" />
+							</styleClass>
+							<font>
+								<Font size="16.0" />
+							</font>
+							<padding>
+								<Insets bottom="8.0" left="20.0" right="20.0" top="8.0" />
+							</padding>
+						</Button>
+						<CheckBox fx:id="chkOverrideFile" layoutX="8.0"
+							layoutY="339.0" mnemonicParsing="false" selected="true"
+							text="如果文件存在则覆盖" AnchorPane.leftAnchor="8.0">
+							<font>
+								<Font size="16.0" />
+							</font>
+						</CheckBox>
+						<Separator layoutY="371.0" AnchorPane.leftAnchor="0.0"
+							AnchorPane.rightAnchor="0.0" />
+						<Button fx:id="btnSaveConfig" layoutX="124.0"
+							layoutY="10.0" mnemonicParsing="false" onAction="#onSaveConfig"
+							text="保存配置" AnchorPane.leftAnchor="124.0"
+							AnchorPane.rightAnchor="124.0" AnchorPane.topAnchor="10.0">
+							<font>
+								<Font size="14.0" />
+							</font>
+							<styleClass>
+								<String fx:value="btn" />
+								<String fx:value="btn-executable" />
+							</styleClass>
+						</Button>
+						<Separator layoutX="46.0" layoutY="50.0"
+							prefWidth="200.0" AnchorPane.leftAnchor="0.0"
+							AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+						<Label fx:id="lblTableAlias" layoutX="12.0" layoutY="64.0"
+							text="表的别名 :" AnchorPane.leftAnchor="12.0"
+							AnchorPane.topAnchor="64.0">
+							<font>
+								<Font size="16.0" />
+							</font>
+						</Label>
+						<TextField fx:id="txtTableAlias" layoutX="92.0"
+							layoutY="57.0" prefHeight="29.0" prefWidth="216.0"
+							promptText="输入自定义表的别名" AnchorPane.rightAnchor="18.0"
+							AnchorPane.topAnchor="60.0">
+							<font>
+								<Font size="14.0" />
+							</font>
+						</TextField>
+						<Label fx:id="lblPrimaryKey" layoutX="12.0" layoutY="101.0"
+							text="主键名称 :" AnchorPane.leftAnchor="12.0"
+							AnchorPane.topAnchor="101.0">
+							<font>
+								<Font size="16.0" />
+							</font>
+						</Label>
+						<TextField fx:id="txtPrimaryKey" layoutX="92.0"
+							layoutY="98.0" prefHeight="29.0" prefWidth="216.0"
+							promptText="当前表没有主键" AnchorPane.rightAnchor="18.0"
+							AnchorPane.topAnchor="98.0">
+							<font>
+								<Font size="14.0" />
+							</font>
+						</TextField>
+						<Separator layoutX="66.0" layoutY="138.0"
+							prefWidth="200.0" AnchorPane.leftAnchor="0.0"
+							AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="138.0" />
+						<CheckBox fx:id="chkFieldCamel" layoutX="8.0"
+							layoutY="309.0" mnemonicParsing="false" onAction="#onCamel"
+							selected="true" text="字段属性名使用驼峰命名" AnchorPane.leftAnchor="8.0">
+							<font>
+								<Font size="16.0" />
+							</font>
+						</CheckBox>
+					</children>
+				</AnchorPane>
+			</items>
+		</SplitPane>
+	</content>
+</ScrollPane>

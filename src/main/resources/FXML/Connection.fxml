@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane minHeight="550.0" minWidth="550.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.szmirren.controller.ConnectionController">
+	<children>
+		<GridPane AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+			<columnConstraints>
+				<ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="161.0" />
+				<ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="251.0" minWidth="10.0" prefWidth="248.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+			</rowConstraints>
+			<children>
+				<Label fx:id="lblConnName" text="连接名称:">
+					<font>
+						<Font size="20.0" />
+					</font>
+					<GridPane.margin>
+						<Insets right="5.0" />
+					</GridPane.margin>
+				</Label>
+				<Label fx:id="lblConnURL" text="主机名/IP地址:" textAlignment="JUSTIFY" GridPane.rowIndex="1">
+					<font>
+						<Font size="20.0" />
+					</font>
+					<GridPane.margin>
+						<Insets right="5.0" />
+					</GridPane.margin>
+				</Label>
+				<Label fx:id="lblListenPort" text="端口号:" GridPane.rowIndex="2">
+					<font>
+						<Font size="20.0" />
+					</font>
+					<GridPane.margin>
+						<Insets right="5.0" />
+					</GridPane.margin>
+				</Label>
+				<Label fx:id="lblDBType" text="数据库类型:" GridPane.rowIndex="3">
+					<font>
+						<Font size="20.0" />
+					</font>
+					<GridPane.margin>
+						<Insets right="5.0" />
+					</GridPane.margin>
+				</Label>
+				<Label fx:id="lblDBName" text="数据库:" GridPane.rowIndex="4">
+					<font>
+						<Font size="20.0" />
+					</font>
+					<GridPane.margin>
+						<Insets right="5.0" />
+					</GridPane.margin>
+				</Label>
+				<Label fx:id="lblUserName" text="用户:" GridPane.rowIndex="5">
+					<font>
+						<Font size="20.0" />
+					</font>
+					<GridPane.margin>
+						<Insets right="5.0" />
+					</GridPane.margin>
+				</Label>
+				<Label fx:id="lblUserPwd" text="密码:" GridPane.rowIndex="6">
+					<font>
+						<Font size="20.0" />
+					</font>
+					<GridPane.margin>
+						<Insets right="5.0" />
+					</GridPane.margin>
+				</Label>
+				<Label fx:id="lblDBCoding" text="编码格式:" GridPane.rowIndex="7">
+					<font>
+						<Font size="20.0" />
+					</font>
+					<GridPane.margin>
+						<Insets right="5.0" />
+					</GridPane.margin>
+				</Label>
+				<TextField fx:id="txtConnName" prefHeight="30.0" prefWidth="250.0" promptText="自定义想要显示的名字" GridPane.columnIndex="1" />
+				<TextField fx:id="txtConnURL" prefHeight="30.0" prefWidth="250.0" promptText="URL例如:127.0.0.1 / localhost" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<TextField fx:id="txtListenPort" prefHeight="30.0" prefWidth="250.0" promptText="监听的端口号,示例:1521" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<TextField fx:id="txtDBName" prefHeight="30.0" prefWidth="250.0" promptText="数据库名称" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+				<TextField fx:id="txtUserName" prefHeight="30.0" prefWidth="250.0" promptText="用户名" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+				<PasswordField fx:id="txtUserPwd" prefHeight="30.0" prefWidth="250.0" promptText="请输入密码" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+				<ComboBox fx:id="cboDBType" prefHeight="30.0" prefWidth="250.0" promptText="请输入或选择数据库类型" GridPane.columnIndex="1" GridPane.rowIndex="3">
+
+				</ComboBox>
+				<ComboBox fx:id="cboDBCoding" prefHeight="30.0" prefWidth="250.0" promptText="请选择字符编码格式" GridPane.columnIndex="1" GridPane.rowIndex="7">
+
+				</ComboBox>
+			</children>
+		</GridPane>
+		<Button fx:id="btnTestConn" contentDisplay="CENTER" layoutX="100.0" layoutY="487.0" mnemonicParsing="false" onAction="#testConnection" text="连接测试" AnchorPane.bottomAnchor="20.0">
+			<font>
+				<Font size="20.0" />
+			</font>
+			<cursor>
+				<Cursor fx:constant="HAND" />
+			</cursor>
+			<styleClass>
+				<String fx:value="btn" />
+				<String fx:value="btn-executable" />
+			</styleClass>
+		</Button>
+		<Button fx:id="btnCancel" layoutX="360.0" layoutY="487.0" mnemonicParsing="false" onAction="#onCancel" text="取消" AnchorPane.bottomAnchor="20.0">
+			<font>
+				<Font size="20.0" />
+			</font>
+			<cursor>
+				<Cursor fx:constant="HAND" />
+			</cursor>
+			<styleClass>
+				<String fx:value="btn" />
+				<String fx:value="btn-default" />
+			</styleClass>
+		</Button>
+		<Button fx:id="btnSave" layoutX="230.0" layoutY="487.0" mnemonicParsing="false" onAction="#saveConnection" text="保存连接" textFill="WHITE" AnchorPane.bottomAnchor="20.0">
+			<font>
+				<Font size="20.0" />
+			</font>
+			<cursor>
+				<Cursor fx:constant="HAND" />
+			</cursor>
+			<styleClass>
+				<String fx:value="btn" />
+				<String fx:value="btn-success" />
+			</styleClass>
+		</Button>
+	</children>
+</AnchorPane>
