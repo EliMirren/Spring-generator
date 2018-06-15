@@ -548,10 +548,10 @@ public class Assist {
 	 * @param column
 	 * @param mode
 	 */
-	public void setOrder(WhereOrder... order) {
+	public Assist setOrder(WhereOrder... order) {
 		if (order == null || order.length == 0) {
 			this.order = null;
-			return;
+			return this;
 		}
 		if (order.length == 1) {
 			if (order[0].isMode()) {
@@ -559,7 +559,7 @@ public class Assist {
 			} else {
 				this.order = "order By " + order[0].getColumn() + " desc";
 			}
-			return;
+			return this;
 		}
 		StringBuffer sql = new StringBuffer("order By ");
 		for (int i = 0; i < order.length; i++) {
@@ -577,8 +577,8 @@ public class Assist {
 				}
 			}
 		}
-
 		this.order = sql.toString();
+		return this;
 	}
 
 	/**
@@ -595,10 +595,11 @@ public class Assist {
 	 * 
 	 * @param distinct
 	 */
-	public void setDistinct(boolean distinct) {
+	public Assist setDistinct(boolean distinct) {
 		if (distinct) {
 			this.distinct = "distinct";
 		}
+		return this;
 	}
 
 	/**
@@ -624,8 +625,9 @@ public class Assist {
 	 * 
 	 * @param startRow
 	 */
-	public void setStartRow(Integer startRow) {
+	public Assist setStartRow(Integer startRow) {
 		this.startRow = startRow;
+		return this;
 	}
 
 	/**
@@ -642,8 +644,9 @@ public class Assist {
 	 * 
 	 * @param rowSize
 	 */
-	public void setRowSize(Integer rowSize) {
+	public Assist setRowSize(Integer rowSize) {
 		this.rowSize = rowSize;
+		return this;
 	}
 
 	/**
@@ -661,8 +664,9 @@ public class Assist {
 	 * 
 	 * @return
 	 */
-	public void setResultColumn(String resultColumn) {
+	public Assist setResultColumn(String resultColumn) {
 		this.resultColumn = resultColumn;
+		return this;
 	}
 	/**
 	 * 获得自定义的属性值
@@ -677,8 +681,9 @@ public class Assist {
 	 * 
 	 * @param customValue
 	 */
-	public void setCustomValue(Object customValue) {
+	public Assist setCustomValue(Object customValue) {
 		this.customValue = customValue;
+		return this;
 	}
 
 	/**
