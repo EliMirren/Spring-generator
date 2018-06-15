@@ -1,213 +1,119 @@
 package ${content.serviceImpl.classPackage};
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import ${content.service.classPackage!}.${content.service.className!};
-import ${content.sql.classPackage!}.${content.sql.className!};
-import ${content.entity.classPackage!}.${content.entity.className!};
-
-import io.vertx.core.AsyncResult;
-import io.vertx.core.Future;
-import io.vertx.core.Handler;
-import io.vertx.core.MultiMap;
-import io.vertx.core.json.JsonObject;
-import io.vertx.ext.jdbc.JDBCClient;
+import com.alibaba.fastjson.JSONObject;
+import ${content.service.classPackage}.${content.service.className};
+import ${content.dao.classPackage}.${content.dao.className};
+import ${content.assist.classPackage}.${content.assist.className};
+import ${content.entity.classPackage}.${content.entity.className};
 /**
- * ${content.router.className!}的服务接口实现类
+ * ${content.entity.className}的服务接口的实现类
  * 
- * @author
+ * @author 
+ *
  */
+@Service
 public class ${content.serviceImpl.className} implements ${content.service.className} {
 	private final Logger LOG = LogManager.getLogger(this.getClass());
-	/** 数据库客户端 */
-	private JDBCClient jdbcClient;
-	/** ${content.entity.className!}的SQL操作类 */
-	private ${content.sql.className!} ${content.sql.className?uncap_first};
-	/**
-	 * 实例化一个服务
-	 * 
-	 * @param executeSQL
-	 *          ${content.entity.className!}的SQL操作类
-	 * @param jdbcClient
-	 *          数据库客户端
-	 */
-	public ${content.serviceImpl.className!}(${content.sql.className!} executeSQL, JDBCClient jdbcClient) {
-		super();
-		this.jdbcClient = jdbcClient;
-		this.${content.sql.className?uncap_first} = executeSQL;
-	}
-	/**
-	 * 返回格式化
-	 * 
-	 * @return
-	 */
-	public Future<JsonObject> resultFormat(int code, Object data) {
-		// TODO 如果你看到该方法,正确的做法应该将返回的结果按自己的协议封装成一个工具类,比如常用的状态,并修改模板
-		JsonObject json = new JsonObject();
-		json.put("status", code);
+
+	@Autowired
+	private ${content.dao.className} ${content.dao.className?uncap_first};
+	// TODO 当你看到这个方法时你应该创建一个工具类做通用的方法,定义自己的返回格式化
+	private static final int C200 = 200;
+	private static final int C412 = 412;
+	public String resultFormat(int code, Object data) {
+		JSONObject result = new JSONObject();
+		result.put("code", code);
 		if (data != null) {
-			json.put("data", data);
-		} else {
-			json.putNull("data");
+			result.put("data", data);
 		}
-		return Future.succeededFuture(json);
+		return result.toJSONString();
 	}
 
 	@Override
-	public void ${content.service.item.select.value!}(MultiMap params, Handler<AsyncResult<JsonObject>> handler) {
-		jdbcClient.getConnection(conn -> {
-			if (conn.succeeded()) {
-				${content.sql.className?uncap_first}.selectAll(conn.result(), res -> {
-					if (res.succeeded()) {
-						List<JsonObject> result = res.result() == null ? new ArrayList<>() : res.result();
-						if (LOG.isDebugEnabled()) {
-							LOG.debug("执行查询所有${content.entity.className!}-->结果:" + result);
-						}
-						handler.handle(resultFormat(200, result));
-					} else {
-						LOG.error("执行查询所有${content.entity.className!}-->失败:", res.cause());
-						handler.handle(resultFormat(412, res.cause().getMessage()));
-					}
-				});
-			} else {
-				LOG.error("执行查询所有${content.entity.className!}->获取数据库连接-->失败:", conn.cause());
-				handler.handle(resultFormat(500, conn.cause().getMessage()));
+	public String ${content.service.item.select.value!}(${content.entity.className} value) {
+		//TODO这里可以做通过Assist做添加查询
+		List<${content.entity.className}> result = ${content.dao.className?uncap_first}.${content.dao.item.select.value!}(null);
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("执行获取${content.entity.className}数据集-->结果:", result);
+		}
+		return resultFormat(C200, result);
+	}
+	<#if content.entity.primaryKeyAttr??>
+	@Override
+	public String ${content.service.item.selectById.value!}(${content.entity.primaryKeyAttr.javaType} id) {
+		if (id == null) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("执行通过${content.entity.className}的id获得${content.entity.className}对象-->失败:id不能为空");
 			}
-		});
-
-	}
-	@Override
-	public void ${content.service.item.selectById.value!}(MultiMap params, Handler<AsyncResult<JsonObject>> handler) {
-		String id = params.get("id");
-		if (id == null || "".equals(id)) {
-			// TODO 这里也可以做一个工具后用工具验证
-			handler.handle(resultFormat(412, "id不能为空"));
+			return resultFormat(C412, null);
 		}
-		jdbcClient.getConnection(conn -> {
-			if (conn.succeeded()) {
-				${content.sql.className?uncap_first}.selectById(id, conn.result(), res -> {
-					if (res.succeeded()) {
-						JsonObject result = res.result() == null ? new JsonObject() : res.result();
-						if (LOG.isDebugEnabled()) {
-							LOG.debug("执行通过id查询${content.entity.className!}-->结果:" + result);
-						}
-						handler.handle(resultFormat(200, result));
-					} else {
-						LOG.error("执行通过id查询${content.entity.className!}-->失败:", res.cause());
-						handler.handle(resultFormat(412, res.cause().getMessage()));
-					}
-				});
+		${content.entity.className} result = ${content.dao.className?uncap_first}.${content.dao.item.selectById.value!}(id);
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("执行通过${content.entity.className}的id获得${content.entity.className}对象-->结果:", result);
+		}
+		return resultFormat(C200, result);
+	}
+	</#if>
 
-			} else {
-				LOG.error("执行通过id查询${content.entity.className!}->获取数据库连接-->失败:", conn.cause());
-				handler.handle(resultFormat(500, conn.cause().getMessage()));
+	@Override
+	public String ${content.service.item.insertNotNull.value!}(${content.entity.className} value) {
+		if (value == null) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("执行将${content.entity.className}中属性值不为null的数据保存到数据库-->失败:对象不能为空");
 			}
-		});
-	}
-	@Override
-	public void ${content.service.item.insertNotNull.value!}(MultiMap params, Handler<AsyncResult<JsonObject>> handler) {
-		try {
-			${content.entity.className!} ${content.entity.classNameLower!} = new ${content.entity.className!}(params);
-			<#if content.entity.cantNullAttrs?exists>
-			if(<#list content.entity.cantNullAttrs as item>${content.entity.classNameLower!}.${item.fget}() == null <#if item?has_next>||</#if> </#list>){
-				handler.handle(resultFormat(412, "存在空值"));
+			return resultFormat(C412, null);
+		}
+		<#if content.entity.cantNullAttrs?exists>
+		if(<#list content.entity.cantNullAttrs as item>value.${item.fget}() == null <#if item?has_next>||</#if> </#list>){
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("执行将${content.entity.className}中属性值不为null的数据保存到数据库-->失败:存在不能为空的空值");
 			}
-			</#if>
-			jdbcClient.getConnection(conn -> {
-				if (conn.succeeded()) {
-					${content.sql.className?uncap_first}.insertNonEmpty(${content.entity.classNameLower!}, conn.result(), res -> {
-						if (res.succeeded()) {
-							int result = res.result() == null ? 0 : res.result();
-							if (LOG.isDebugEnabled()) {
-								LOG.debug("执行将${content.entity.className!}中不为null的属性保存到数据库-->结果:" + result);
-							}
-							if (result > 1) {
-								result = 1;
-							}
-							handler.handle(resultFormat(200, result));
-						} else {
-							LOG.error("执行将${content.entity.className!}中不为null的属性保存到数据库-->失败:", res.cause());
-							handler.handle(resultFormat(412, res.cause().getMessage()));
-						}
-					});
-				} else {
-					LOG.error("执行将${content.entity.className!}中不为null的属性保存到数据库->获取数据库连接-->失败:", conn.cause());
-					handler.handle(resultFormat(500, conn.cause().getMessage()));
-				}
-			});
-		} catch (Exception e) {
-			LOG.error("执行将${content.entity.className!}中不为null的属性保存到数据库-->失败:", e);
-			handler.handle(resultFormat(412, e.getMessage()));
+			return resultFormat(C412, null);
 		}
-
+		</#if>
+		int result = ${content.dao.className?uncap_first}.${content.dao.item.insertNotNull.value!}(value);
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("执行将${content.entity.className}中属性值不为null的数据保存到数据库-->结果:", result);
+		}
+		return resultFormat(C200, result);
 	}
+	<#if content.entity.primaryKeyAttr??>
 	@Override
-	public void ${content.service.item.updateNotNull.value!}(MultiMap params, Handler<AsyncResult<JsonObject>> handler) {
-		try {
-			${content.entity.className!} ${content.entity.classNameLower!} = new ${content.entity.className!}(params);
-			jdbcClient.getConnection(conn -> {
-				if (conn.succeeded()) {
-					${content.sql.className?uncap_first}.insertNonEmpty(${content.entity.classNameLower!}, conn.result(), res -> {
-						if (res.succeeded()) {
-							int result = res.result() == null ? 0 : res.result();
-							if (LOG.isDebugEnabled()) {
-								LOG.debug("执行更新${content.entity.className!}类中属性不为null的数据-->结果:" + result);
-							}
-							if (result > 1) {
-								result = 1;
-							}
-							handler.handle(resultFormat(200, result));
-						} else {
-							LOG.error("执行更新${content.entity.className!}类中属性不为null的数据-->失败:", res.cause());
-							handler.handle(resultFormat(412, res.cause().getMessage()));
-						}
-					});
-				} else {
-					LOG.error("执行更新${content.entity.className!}类中属性不为null的数据->获取数据库连接-->失败:", conn.cause());
-					handler.handle(resultFormat(500, conn.cause().getMessage()));
-				}
-			});
-		} catch (Exception e) {
-			LOG.error("执行更新${content.entity.className!}类中属性不为null的数据-->失败:", e);
-			handler.handle(resultFormat(412, e.getMessage()));
-		}
-
-	}
-	@Override
-	public void ${content.service.item.deleteById.value!}(MultiMap params, Handler<AsyncResult<JsonObject>> handler) {
-		String id = params.get("id");
-		if (id == null || "".equals(id)) {
-			// TODO 这里也可以做一个工具后用工具验证
-			handler.handle(resultFormat(412, "id不能为空"));
-		}
-		jdbcClient.getConnection(conn -> {
-			if (conn.succeeded()) {
-				${content.sql.className?uncap_first}.deleteById(id, conn.result(), res -> {
-					if (res.succeeded()) {
-						int result = res.result() == null ? 0 : res.result();
-						if (LOG.isDebugEnabled()) {
-							LOG.debug("执行通过id删除${content.entity.className!}-->结果:" + result);
-						}
-						if (result > 1) {
-							result = 1;
-						}
-						handler.handle(resultFormat(200, result));
-					} else {
-						LOG.error("执行通过id删除${content.entity.className!}-->失败:", res.cause());
-						handler.handle(resultFormat(412, res.cause().getMessage()));
-					}
-				});
-
-			} else {
-				LOG.error("执行通过id删除${content.entity.className!}->获取数据库连接-->失败:", conn.cause());
-				handler.handle(resultFormat(500, conn.cause().getMessage()));
+	public String ${content.service.item.updateNotNull.value!}(${content.entity.className} value) {
+		if (value == null) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("执行通过${content.entity.className}的id更新${content.entity.className}中属性不为null的数据-->失败:对象为null");
 			}
-		});
-
+			return resultFormat(C412, null);
+		}
+		int result = ${content.dao.className?uncap_first}.${content.dao.item.updateNotNullById.value!}(value);
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("执行通过${content.entity.className}的id更新${content.entity.className}中属性不为null的数据-->结果:", result);
+		}
+		return resultFormat(C200, result);
 	}
+
+	@Override
+	public String ${content.service.item.deleteById.value!}(${content.entity.primaryKeyAttr.javaType} id) {
+		if (id == null) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("执行通过${content.entity.className}的id删除${content.entity.className}-->失败:id不能为空");
+			}
+			return resultFormat(C412, null);
+		}
+		int result = ${content.dao.className?uncap_first}.${content.dao.item.deleteById.value!}(id);
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("执行通过${content.entity.className}的id删除${content.entity.className}-->结果:", result);
+		}
+		return resultFormat(C200, result);
+	}
+	</#if>
+
 
 }

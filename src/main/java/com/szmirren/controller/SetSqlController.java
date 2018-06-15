@@ -31,8 +31,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
@@ -130,8 +130,8 @@ public class SetSqlController extends BaseController {
 	 * 初始化
 	 */
 	public void init() {
-		LOG.debug("初始化SetSqlController...");
-		LOG.debug("初始化SetSqlController->初始化属性...");
+		LOG.debug("初始化SetDaoController...");
+		LOG.debug("初始化SetDaoController->初始化属性...");
 		// 添加右键删除属性
 		StringProperty property = Main.LANGUAGE.get(LanguageKey.SET_TBL_MENU_ITEM_DELETE);
 		String delMenu = property.get() == null ? "删除该属性" : property.get();
@@ -169,17 +169,17 @@ public class SetSqlController extends BaseController {
 			((TableAttributeKeyValue) t.getTableView().getItems().get(t.getTablePosition().getRow())).setDescribe(t.getNewValue());
 		});
 		tblProperty.setItems(tblPropertyValues);
-		LOG.debug("初始化SetSqlController->初始化模板文件名选择...");
+		LOG.debug("初始化SetDaoController->初始化模板文件名选择...");
 		cboTemplate.getItems().addAll(indexController.getTemplateNameItems());
-		if (indexController.getTemplateNameItems().contains(Constant.TEMPLATE_NAME_SQL)) {
-			cboTemplate.setValue(Constant.TEMPLATE_NAME_SQL);
+		if (indexController.getTemplateNameItems().contains(Constant.TEMPLATE_NAME_DAO)) {
+			cboTemplate.setValue(Constant.TEMPLATE_NAME_DAO);
 		}
-		LOG.debug("初始化SetSqlController->初始化配置信息...");
+		LOG.debug("初始化SetDaoController->初始化配置信息...");
 		if (indexController.getHistoryConfig() != null) {
-			if (indexController.getHistoryConfig().getSqlConfig() == null) {
+			if (indexController.getHistoryConfig().getDaoConfig() == null) {
 				loadConfig(getConfig());
 			} else {
-				loadConfig(indexController.getHistoryConfig().getSqlConfig());
+				loadConfig(indexController.getHistoryConfig().getDaoConfig());
 			}
 		} else {
 			String configName = indexController.getHistoryConfigName();
@@ -189,7 +189,7 @@ public class SetSqlController extends BaseController {
 			loadConfig(getConfig(configName));
 		}
 		initLanguage();
-		LOG.debug("初始化SetSqlController-->成功!");
+		LOG.debug("初始化SetDaoController-->成功!");
 	}
 
 	/**
@@ -239,7 +239,7 @@ public class SetSqlController extends BaseController {
 			LOG.error("执行从数据库中获取配置文件-->失败:", e);
 			AlertUtil.showErrorAlert("执行获得配置文件-->失败:" + e);
 		}
-		return new DaoConfig();
+		return new DaoConfig().initDefaultValue();
 	}
 
 	/**
@@ -333,7 +333,7 @@ public class SetSqlController extends BaseController {
 	 * @param event
 	 */
 	public void onConfirm(ActionEvent event) {
-		indexController.getHistoryConfig().setSqlConfig(getThisConfig());
+		indexController.getHistoryConfig().setDaoConfig(getThisConfig());
 		getDialogStage().close();
 	}
 

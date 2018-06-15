@@ -27,7 +27,7 @@
 <ScrollPane fitToHeight="true" fitToWidth="true"
 	prefHeight="700.0" prefWidth="1180.0" stylesheets="@../css/style.css"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="com.szmirren.controller.SetSqlAndParamsController">
+	fx:controller="com.szmirren.controller.SetMapperController">
 	<content>
 		<SplitPane dividerPositions="0.7202380952380952"
 			layoutX="276.0" layoutY="132.0" prefHeight="160.0" prefWidth="888.0"

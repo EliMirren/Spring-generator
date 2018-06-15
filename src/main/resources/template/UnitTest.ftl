@@ -1,92 +1,80 @@
 package ${content.unitTest.classPackage};
 
-import java.io.IOException;
-import java.net.ServerSocket;
-
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import ${content.entity.classPackage}.${content.entity.className};
-
-import io.vertx.core.DeploymentOptions;
-import io.vertx.core.Vertx;
-import io.vertx.core.json.JsonObject;
-import io.vertx.ext.unit.Async;
-import io.vertx.ext.unit.TestContext;
-import io.vertx.ext.unit.junit.VertxUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 /**
- * ${content.router.className!}的测试
+ * ${content.entity.className}的测试
  * 
  * @author 
  *
  */
-@RunWith(VertxUnitRunner.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class ${content.unitTest.className} {
-	private Vertx vertx;
-	private Integer port;
-	@Before
-	public void setUp(TestContext context) throws IOException {
-		vertx = Vertx.vertx();
-		ServerSocket socket = new ServerSocket(0);
-		port = socket.getLocalPort();
-		socket.close();
-		// 启动Verticle的配置文件
-		JsonObject config = new JsonObject();
-		DeploymentOptions options = new DeploymentOptions().setConfig(config);
-		// TODO 这里修改成启动你的服务,你可以定一个规则后修改模板
-		vertx.deployVerticle(YourVerticle.class.getName(), options, context.asyncAssertSuccess());
-	}
-	@After
-	public void tearDown(TestContext context) {
-		vertx.close(context.asyncAssertSuccess());
-	}
+	@Autowired
+	private MockMvc mvc;
+
+	/**
+	 * 单元测试:${content.controller.item.f_find.describe!}
+	 * @throws Exception
+	 */
 	@Test
-	public void ${content.router.item.f_find.value!}Test(TestContext context) {
-		final Async async = context.async();
-		// TODO 填充测试值与结果
-		vertx.createHttpClient().getNow(port, "localhost", "${content.router.item.r_find.value!}", response -> {
-			context.assertTrue(response.statusCode() == 200);
-			async.complete();
-		});
+	public void ${content.controller.item.f_find.value!}Test() throws Exception {
+		ResultActions action = mvc.perform(MockMvcRequestBuilders.get("${content.controller.item.r_find.value}")).andExpect(MockMvcResultMatchers.status().isOk());
+		// TODO 当你看到这个后你应该自己修改模板编写测试内容规则
 	}
+	
+	<#if content.entity.primaryKeyAttr??>
+	/**
+	 * 单元测试:${content.controller.item.f_getById.describe!}
+	 * @throws Exception
+	 */
 	@Test
-	public void ${content.router.item.f_getById.value!}Test(TestContext context) {
-		final Async async = context.async();
-		// TODO 填充测试值与结果
-		vertx.createHttpClient().getNow(port, "localhost", "${content.router.item.r_getById.value!}", response -> {
-			context.assertTrue(response.statusCode() == 200);
-			async.complete();
-		});
+	public void ${content.controller.item.f_getById.value!}Test() throws Exception {
+		ResultActions action = mvc.perform(MockMvcRequestBuilders.get("${content.controller.item.r_getById.value}")).andExpect(MockMvcResultMatchers.status().isOk());
+		// TODO 当你看到这个后你应该自己修改模板编写测试内容规则
 	}
+	</#if>
+	
+	/**
+	 * 单元测试:${content.controller.item.f_saveNotNull.describe!}
+	 * @throws Exception
+	 */
 	@Test
-	public void ${content.router.item.f_saveNotNull.value!}Test(TestContext context) {
-		final Async async = context.async();
-		${content.entity.className} ${content.entity.className?uncap_first} = new ${content.entity.className}();// TODO 添加自己添加或者修改模板定制
-		vertx.createHttpClient().post(port, "localhost", "${content.router.item.r_saveNotNull.value!}", response -> {
-			context.assertTrue(response.statusCode() == 200);// TODO 添加自己设定可以在模板修改
-			async.complete();
-		}).end(${content.entity.className?uncap_first}.toJson().toBuffer());
+	public void ${content.controller.item.f_saveNotNull.value!}Test() throws Exception {
+		ResultActions action = mvc.perform(MockMvcRequestBuilders.post("${content.controller.item.r_saveNotNull.value}")).andExpect(MockMvcResultMatchers.status().isOk());
+		// TODO 当你看到这个后你应该自己修改模板编写测试内容规则
 	}
+	
+	/**
+	 * 单元测试:${content.controller.item.f_updateNotNull.describe!}
+	 * @throws Exception
+	 */
 	@Test
-	public void ${content.router.item.f_updateNotNull.value!}Test(TestContext context) {
-		final Async async = context.async();
-		${content.entity.className} ${content.entity.className?uncap_first} = new ${content.entity.className}();// TODO 添加自己添加或者修改模板定制
-		vertx.createHttpClient().put(port, "localhost", "${content.router.item.r_updateNotNull.value!}", response -> {
-			context.assertTrue(response.statusCode() == 200);// TODO 添加自己设定可以在模板修改
-			async.complete();
-		}).end(${content.entity.className?uncap_first}.toJson().toBuffer());
-	}
-	@Test
-	public void ${content.router.item.f_deleteById.value!}Test(TestContext context) {
-		final Async async = context.async();
-		// TODO 填充测试值与结果
-		vertx.createHttpClient().delete(port, "localhost", "${content.router.item.r_deleteById.value!}", response -> {
-			context.assertTrue(response.statusCode() == 200);
-			async.complete();
-		}).end();
+	public void ${content.controller.item.f_updateNotNull.value!}Test() throws Exception {
+		ResultActions action = mvc.perform(MockMvcRequestBuilders.put("${content.controller.item.r_updateNotNull.value}")).andExpect(MockMvcResultMatchers.status().isOk());
+		// TODO 当你看到这个后你应该自己修改模板编写测试内容规则
 	}
 
+	<#if content.entity.primaryKeyAttr??>
+	/**
+	 * 单元测试:${content.controller.item.f_deleteById.describe!}
+	 * @throws Exception
+	 */
+	@Test
+	public void ${content.controller.item.f_deleteById.value!}Test() throws Exception {
+		ResultActions action = mvc.perform(MockMvcRequestBuilders.delete("${content.controller.item.r_deleteById.value}")).andExpect(MockMvcResultMatchers.status().isOk());
+		// TODO 当你看到这个后你应该自己修改模板编写测试内容规则
+	}
+	</#if>
 }

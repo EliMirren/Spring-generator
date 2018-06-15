@@ -59,11 +59,11 @@ public class ServiceConfig {
 	 * 初始化默认数据
 	 */
 	public ServiceConfig initDefaultValue() {
-		tableItem.add(new TableAttributeKeyValue("select", "select{C}", "查询所有数据"));
-		tableItem.add(new TableAttributeKeyValue("selectById", "select{C}ById", "通过id查询数据"));
-		tableItem.add(new TableAttributeKeyValue("insertNotNull", "insertNotNull{C}", "插入不为空的数据"));
-		tableItem.add(new TableAttributeKeyValue("updateNotNull", "updateNotNull{C}", "更新不为空的数据"));
-		tableItem.add(new TableAttributeKeyValue("deleteById", "delete{C}ById", "通过id删除数据"));
+		tableItem.add(new TableAttributeKeyValue("select", "find", "查询所有数据"));
+		tableItem.add(new TableAttributeKeyValue("selectById", "findOne", "通过id查询数据"));
+		tableItem.add(new TableAttributeKeyValue("insertNotNull", "saveNotNull", "插入不为空的数据"));
+		tableItem.add(new TableAttributeKeyValue("updateNotNull", "updateNotNullById", "更新不为空的数据"));
+		tableItem.add(new TableAttributeKeyValue("deleteById", "deleteById", "通过id删除数据"));
 		return this;
 	}
 

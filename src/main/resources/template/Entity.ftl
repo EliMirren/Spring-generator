@@ -1,7 +1,6 @@
 package ${content.entity.classPackage};
 
-import io.vertx.core.MultiMap;
-import io.vertx.core.json.JsonObject;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * ${content.entity.tableName}实体类
@@ -25,62 +24,42 @@ public class ${content.entity.className} {
 	 * 
 	 * @param obj
 	 */
-	public ${content.entity.className!}(JsonObject obj) {
+	public ${content.entity.className!}(JSONObject obj) {
 		this();
 		<#list content.entity.attrs as item> 
 		<#if item.javaType  == "String">
-		if (obj.getValue("${item.field}") instanceof String) {
-			this.${item.fset}((String) obj.getValue("${item.field}"));
+		if (obj.get("${item.field}") instanceof String) {
+			this.${item.fset}((String) obj.get("${item.field}"));
 		}
 		<#elseif item.javaType  ==  "Integer" || item.javaType  ==  "int">
-		if (obj.getValue("${item.field}") instanceof Number) {
-			this.${item.fset}(((Number) obj.getValue("${item.field}")).intValue());
+		if (obj.get("${item.field}") instanceof Number) {
+			this.${item.fset}(((Number) obj.get("${item.field}")).intValue());
 		}
 		<#elseif item.javaType  ==  "Long" || item.javaType  ==  "long">
-		if (obj.getValue("${item.field}") instanceof Number) {
-			this.${item.fset}(((Number) obj.getValue("${item.field}")).longValue());
+		if (obj.get("${item.field}") instanceof Number) {
+			this.${item.fset}(((Number) obj.get("${item.field}")).longValue());
 		}
 		<#elseif item.javaType  ==  "Double" || item.javaType  ==  "double">
-		if (obj.getValue("${item.field}") instanceof Number) {
-			this.${item.fset}(((Number) obj.getValue("${item.field}")).doubleValue());
+		if (obj.get("${item.field}") instanceof Number) {
+			this.${item.fset}(((Number) obj.get("${item.field}")).doubleValue());
 		}
 		<#elseif item.javaType  ==  "JsonObject">
-		if (obj.getValue("${item.field}") instanceof JsonObject) {
-			this.${item.fset}((JsonObject) obj.getValue("${item.field}"));
+		if (obj.get("${item.field}") instanceof JsonObject) {
+			this.${item.fset}((JsonObject) obj.get("${item.field}"));
 		}
 		<#else>
-		this.${item.fset}(obj.getValue("${item.field}"));
+		this.${item.fset}(obj.get("${item.field}"));
 		</#if>
 		</#list>
 	}
-	/**
-	 * 实例化
-	 * 
-	 * @param params
-	 */
-	public ${content.entity.className!}(MultiMap params) {
-		this();
-		<#list content.entity.attrs as item> 
-		<#if item.javaType  ==  "Integer" || item.javaType  ==  "int">
-		this.${item.fset}(new Integer(params.get("${item.field}")));
-		<#elseif item.javaType  ==  "Long" || item.javaType  ==  "long">
-		this.${item.fset}(new Long(params.get("${item.field}")));
-		<#elseif item.javaType  ==  "Double" || item.javaType  ==  "double">
-		this.${item.fset}(new Double(params.get("${item.field}")));
-		<#elseif item.javaType  ==  "JsonObject">
-		this.${item.fset}(new JsonObject((params.get("${item.field}"))));
-		<#else>
-		this.${item.fset}(params.get("${item.field}"));
-		</#if>
-		</#list>
-	}
+	
 	/**
 	 * 将当前对象转换为JsonObject
 	 * 
 	 * @return
 	 */
-	public JsonObject toJson() {
-		JsonObject result = new JsonObject();
+	public JSONObject toJson() {
+		JSONObject result = new JSONObject();
 		<#list content.entity.attrs as item> 
 		<#if item.javaType == "int" || item.javaType == "double" || item.javaType == "char" || item.javaType == "long"  || item.javaType == "boolean" >
 		result.put("${item.field}",this.${item.fget}());

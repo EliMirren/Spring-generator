@@ -18,7 +18,7 @@ public class MapperConfig {
 	/** 设置的tableItem */
 	private List<TableAttributeKeyValue> tableItem = new ArrayList<>();
 	/** 生成模板的名字 */
-	private String templateName = Constant.TEMPLATE_NAME_SQL;
+	private String templateName = Constant.TEMPLATE_NAME_MAPPER;
 	/** 是否覆盖原文件 */
 	private boolean overrideFile = true;
 
@@ -61,6 +61,9 @@ public class MapperConfig {
 	 * @return
 	 */
 	public MapperConfig initDefaultValue() {
+		tableItem.add(new TableAttributeKeyValue("resultMap", "result_{C}_Map", "返回列"));
+		tableItem.add(new TableAttributeKeyValue("assist", "assist", "查询辅助工具类,该模块查询时使用"));
+		tableItem.add(new TableAttributeKeyValue("updateAssist", "updateAssist", "查询辅助工具类,模块用于做修改时使用"));
 		return this;
 	}
 

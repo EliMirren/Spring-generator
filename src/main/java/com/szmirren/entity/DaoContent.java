@@ -36,9 +36,6 @@ public class DaoContent {
 		this.className = className;
 	}
 	
-	
-	
-	
 	public String getClassPackage() {
 		return classPackage;
 	}

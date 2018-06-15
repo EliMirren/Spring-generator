@@ -1,82 +1,57 @@
 package ${content.service.classPackage};
+import java.util.List;
 
-import ${content.serviceImpl.classPackage!}.${content.serviceImpl.className!};
-import ${content.sql.classPackage!}.${content.sql.className!};
-
-import io.vertx.core.AsyncResult;
-import io.vertx.core.Handler;
-import io.vertx.core.MultiMap;
-import io.vertx.core.json.JsonObject;
-import io.vertx.ext.jdbc.JDBCClient;
+import ${content.serviceImpl.classPackage}.${content.serviceImpl.className};
+import ${content.assist.classPackage}.${content.assist.className};
+import ${content.entity.classPackage}.${content.entity.className};
 
 /**
- * ${content.router.className!}的服务接口
+ * ${content.entity.className}的服务接口
  * 
  * @author 
  *
  */
 public interface ${content.service.className} {
 	/**
-	 * 获得服务的实例
+	 * 获得${content.entity.className}数据集,可以通过辅助工具Assist进行条件查询,如果没有条件则传入null
 	 * 
-	 * @param executeSQL
-	 *          SQL类
-	 * @param jdbcClient
-	 *          数据库客户端
 	 * @return
 	 */
-	static ${content.service.className!} create(${content.sql.className!} executeSQL, JDBCClient jdbcClient) {
-		return new ${content.serviceImpl.className!}(executeSQL, jdbcClient);
-	}
-
+	String ${content.service.item.select.value!}(${content.entity.className} value);
+	
+	<#if content.entity.primaryKeyAttr??>
 	/**
-	 * ${content.service.item.select.describe!}
+	 * 通过${content.entity.className}的id获得${content.entity.className}对象
 	 * 
-	 * @param params
-	 *          用户请求的参数
-	 * @param handler
-	 *          返回的结果
+	 * @param id
+	 * @return
 	 */
-	void ${content.service.item.select.value!}(MultiMap params, Handler<AsyncResult<JsonObject>> handler);
+	String ${content.service.item.selectById.value!}(${content.entity.primaryKeyAttr.javaType} id);
+	</#if>
 	
 	/**
-	 * ${content.service.item.selectById.describe!}
+	 * 将${content.entity.className}中属性值不为null的数据到数据库
 	 * 
-	 * @param params
-	 *          用户请求的参数
-	 * @param handler
-	 *          返回的结果
+	 * @param value
+	 * @return
 	 */
-	void ${content.service.item.selectById.value!} (MultiMap params, Handler<AsyncResult<JsonObject>> handler);
+	String ${content.service.item.insertNotNull.value!}(${content.entity.className} value);
+	
+	<#if content.entity.primaryKeyAttr??>
+	/**
+	 * 通过${content.entity.className}的id更新${content.entity.className}中属性不为null的数据
+	 * 
+	 * @param enti
+	 * @return
+	 */
+	String ${content.service.item.updateNotNull.value!}(${content.entity.className} enti);
 	
 	/**
-	 *${content.service.item.insertNotNull.describe!}
+	 * 通过${content.entity.className}的id删除${content.entity.className}
 	 * 
-	 * @param params
-	 *          用户请求的参数
-	 * @param handler
-	 *          返回的结果
+	 * @param id
+	 * @return
 	 */
-	void ${content.service.item.insertNotNull.value!}(MultiMap params, Handler<AsyncResult<JsonObject>> handler);
-	
-	/**
-	 * ${content.service.item.updateNotNull.describe!}
-	 * 
-	 * @param params
-	 *          用户请求的参数
-	 * @param handler
-	 *          返回的结果
-	 */
-	void ${content.service.item.updateNotNull.value!}(MultiMap params, Handler<AsyncResult<JsonObject>> handler);
-	
-	/**
-	 * ${content.service.item.deleteById.describe!}
-	 * 
-	 * @param params
-	 *          用户请求的参数
-	 * @param handler
-	 *          返回的结果
-	 */
-	void ${content.service.item.deleteById.value!}(MultiMap params, Handler<AsyncResult<JsonObject>> handler);
-
+	String ${content.service.item.deleteById.value!}(${content.entity.primaryKeyAttr.javaType} id);
+	</#if>
 }

@@ -59,24 +59,18 @@ public class ControllerConfig {
 	 * 初始化默认数据
 	 */
 	public ControllerConfig initDefaultValue() {
-		tableItem.add(new TableAttributeKeyValue("f_find", "find", "查询所有{C}数据的方法") );
+		tableItem.add(new TableAttributeKeyValue("f_find", "find", "查询所有{C}数据的方法"));
 		tableItem.add(new TableAttributeKeyValue("f_getById", "findOne", "通过id查询{C}数据的方法"));
 		tableItem.add(new TableAttributeKeyValue("f_saveNotNull", "save", "插入{C}属性不为空的数据方法"));
 		tableItem.add(new TableAttributeKeyValue("f_updateNotNull", "update", "更新{C}属性不为空的数据方法"));
 		tableItem.add(new TableAttributeKeyValue("f_deleteById", "delete", "通过id删除{C}数据方法"));
-		
-		tableItem.add(new TableAttributeKeyValue("m_find", "get", "查询所有数据的请求方法"));
-		tableItem.add(new TableAttributeKeyValue("m_getById", "get", "通过id查询数据的请求方法"));
-		tableItem.add(new TableAttributeKeyValue("m_saveNotNull", "post", "插入不为空的数据的请求方法"));
-		tableItem.add(new TableAttributeKeyValue("m_updateNotNull", "put", "更新不为空的数据的请求方法"));
-		tableItem.add(new TableAttributeKeyValue("m_deleteById", "delete", "通过id删除数据的请求方法"));
 
 		tableItem.add(new TableAttributeKeyValue("r_find", "/{C}", "查询所有数据的路由地址"));
-		tableItem.add(new TableAttributeKeyValue("r_getById", "/{C}/:id", "通过id查询数据的路由地址"));
+		tableItem.add(new TableAttributeKeyValue("r_getById", "/{C}/{id}", "通过id查询数据的路由地址"));
 		tableItem.add(new TableAttributeKeyValue("r_saveNotNull", "/{C}", "插入不为空的数据的路由地址"));
 		tableItem.add(new TableAttributeKeyValue("r_updateNotNull", "/{C}", "更新不为空的数据的路由地址"));
-		tableItem.add(new TableAttributeKeyValue("r_deleteById", "/{C}/:id", "通过id删除数据的路由地址"));
-		
+		tableItem.add(new TableAttributeKeyValue("r_deleteById", "/{C}/{id}", "通过id删除数据的路由地址"));
+
 		return this;
 	}
 

@@ -19,6 +19,9 @@ public interface Constant {
 	/** Oracle */
 	static final String ORACLE = "Oracle";
 
+	/** java的后缀名.java */
+	static final String JAVA_SUFFIX = ".java";
+
 	/** default */
 	static final String DEFAULT = "default";
 	/** language */
@@ -34,27 +37,15 @@ public interface Constant {
 	/** ServiceImpl模板的默认名字 */
 	static final String TEMPLATE_NAME_SERVICE_IMPL = "ServiceImpl.ftl";
 	/** Service模板的默认名字 */
-	static final String TEMPLATE_NAME_ROUTER = "Router.ftl";
-	/** ServiceImpl模板的默认名字 */
-	static final String TEMPLATE_NAME_SQL = "SQL.ftl";
+	static final String TEMPLATE_NAME_ROUTER = "Controller.ftl";
+	/** Dao模板的默认名字 */
+	static final String TEMPLATE_NAME_DAO = "Dao.ftl";
+	/** Mapper模板的默认名字 */
+	static final String TEMPLATE_NAME_MAPPER = Main.LANGUAGE.get(LanguageKey.SET_ABSTRACT_AUTOMATIC).get();
+	/** Mapper模板的默认名字 */
+	static final String TEMPLATE_NAME_MAPPER_SUFFIX = "Mapper.ftl";
 	/** SqlAssist模板的默认名字 */
 	static final String TEMPLATE_NAME_SQL_ASSIST = "SqlAssist.ftl";
-	/** Abstract模板的默认名字 */
-	static final String TEMPLATE_NAME_ABSTRACT_SQL = Main.LANGUAGE.get(LanguageKey.SET_ABSTRACT_AUTOMATIC).get();
-	/** Abstract模板的默认名字前缀 */
-	static final String TEMPLATE_NAME_ABSTRACT_SQL_PREFIX = "AbstractSQL";
-	/** Abstract模板的默认名字后缀 */
-	static final String TEMPLATE_NAME_ABSTRACT_SQL_SUFFIX = ".ftl";
-	/** SqlAndParams模板的默认名字 */
-	static final String TEMPLATE_NAME_SQL_AND_PARAMS = "SqlAndParams.ftl";
 	/** 单元测试模板的默认名字 */
 	static final String TEMPLATE_NAME_UNIT_TEST = "UnitTest.ftl";
-	/** SqlPropertyValue默认的类名 */
-	static final String SQL_PROPERTY_VALUE = "SqlPropertyValue";
-	/** SqlPropertyValue模板的默认名字 */
-	static final String TEMPLATE_NAME_SQL_PROPERTY_VALUE = "SqlPropertyValue.ftl";
-	/** SqlWhereCondition 默认的类名 */
-	static final String SQL_WHERE_CONDITION = "SqlWhereCondition";
-	/** SqlWhereCondition模板的默认名字 */
-	static final String TEMPLATE_NAME_SQL_WHERE_CONDITION = "SqlWhereCondition.ftl";
 }
