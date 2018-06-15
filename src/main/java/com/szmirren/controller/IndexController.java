@@ -100,10 +100,12 @@ public class IndexController extends BaseController {
 	private String serviceNamePlace;
 	/** ServiceImpl默认占位符 */
 	private String serviceImplNamePlace;
-	/** Router默认占位符 */
+	/** Controller默认占位符 */
 	private String routerNamePlace;
-	/** SQL默认占位符 */
-	private String sqlNamePlace;
+	/** Dao默认占位符 */
+	private String daoNamePlace;
+	/** Mapper默认占位符 */
+	private String mapperNamePlace;
 	/** 单元测试默认占位符 */
 	private String unitTestPlace;
 
@@ -144,9 +146,9 @@ public class IndexController extends BaseController {
 	/** Assist包名 */
 	@FXML
 	private Label lblAssistPackage;
-	/** SqlParams包名 */
+	/** Mapper包名 */
 	@FXML
-	private Label lblSqlParamsPackage;
+	private Label lblMapperPackage;
 	/** 单元测试的包名 */
 	@FXML
 	private Label lblUnitTestPackage;
@@ -169,9 +171,9 @@ public class IndexController extends BaseController {
 	/** Assist类名 */
 	@FXML
 	private Label lblAssistName;
-	/** SqlParams类名 */
+	/** Mapper的名字 */
 	@FXML
-	private Label lblSqlParamsName;
+	private Label lblMapperName;
 	/** 单元测试的类名 */
 	@FXML
 	private Label lblUnitTestName;
@@ -219,9 +221,9 @@ public class IndexController extends BaseController {
 	/** Assist包名 */
 	@FXML
 	private TextField txtAssistPackage;
-	/** SqlParams包名 */
+	/** Mapper包名 */
 	@FXML
-	private TextField txtSqlParamsPackage;
+	private TextField txtMapperPackage;
 	/** 单元测试的包名 */
 	@FXML
 	private TextField txtUnitTestPackage;
@@ -244,9 +246,9 @@ public class IndexController extends BaseController {
 	/** Assist类名 */
 	@FXML
 	private TextField txtAssistName;
-	/** SqlParams类名 */
+	/** Mapper类名 */
 	@FXML
-	private TextField txtSqlParamsName;
+	private TextField txtMapperName;
 	/** 单元测试类名 */
 	@FXML
 	private TextField txtUnitTestName;
@@ -280,7 +282,7 @@ public class IndexController extends BaseController {
 	private Button btnSetAssist;
 	/** SqlAndParams的设置按钮 */
 	@FXML
-	private Button btnSetSqlAndParams;
+	private Button btnSetMapper;
 	/** 单元测试的设置按钮 */
 	@FXML
 	private Button btnSetUnitTest;
@@ -398,8 +400,11 @@ public class IndexController extends BaseController {
 		if (txtSqlName.getText().contains("{c}")) {
 			txtSqlName.setText(config.getDaoName());
 		}
+		txtMapperPackage.setText(config.getMapperPackage());
+		if (txtMapperName.getText().contains("{c}")) {
+			txtMapperName.setText(config.getMapperName());
+		}
 		txtAssistPackage.setText(config.getAssistPackage());
-		txtSqlParamsPackage.setText(config.getMapperPackage());
 		txtUnitTestPackage.setText(config.getUnitTestPackage());
 		if (txtUnitTestName.getText().contains("{c}")) {
 			txtUnitTestName.setText(config.getUnitTestName());
@@ -427,8 +432,8 @@ public class IndexController extends BaseController {
 		lblSqlName.textProperty().bind(Main.LANGUAGE.get(LanguageKey.INDEX_LBL_SQL_NAME));
 		lblAssistPackage.textProperty().bind(Main.LANGUAGE.get(LanguageKey.INDEX_LBL_ASSIST_PACKAGE));
 		lblAssistName.textProperty().bind(Main.LANGUAGE.get(LanguageKey.INDEX_LBL_ASSIST_NAME));
-		lblSqlParamsPackage.textProperty().bind(Main.LANGUAGE.get(LanguageKey.INDEX_LBL_SQL_AND_PARAMS_PACKAGE));
-		lblSqlParamsName.textProperty().bind(Main.LANGUAGE.get(LanguageKey.INDEX_LBL_SQL_AND_PARAMS_NAME));
+		lblMapperPackage.textProperty().bind(Main.LANGUAGE.get(LanguageKey.INDEX_LBL_MAPPER_PACKAGE));
+		lblMapperName.textProperty().bind(Main.LANGUAGE.get(LanguageKey.INDEX_LBL_MAPPER_NAME));
 		lblUnitTestPackage.textProperty().bind(Main.LANGUAGE.get(LanguageKey.INDEX_LBL_UNIT_TEST_PACKAGE));
 		lblUnitTestName.textProperty().bind(Main.LANGUAGE.get(LanguageKey.INDEX_LBL_UNIT_TEST_NAME));
 		lblSetCustom.textProperty().bind(Main.LANGUAGE.get(LanguageKey.INDEX_LBL_SET_CUSTOM));
@@ -441,7 +446,7 @@ public class IndexController extends BaseController {
 		btnSetRouter.textProperty().bind(Main.LANGUAGE.get(LanguageKey.COMMON_BTN_SET));
 		btnSetSql.textProperty().bind(Main.LANGUAGE.get(LanguageKey.COMMON_BTN_SET));
 		btnSetAssist.textProperty().bind(Main.LANGUAGE.get(LanguageKey.COMMON_BTN_SET));
-		btnSetSqlAndParams.textProperty().bind(Main.LANGUAGE.get(LanguageKey.COMMON_BTN_SET));
+		btnSetMapper.textProperty().bind(Main.LANGUAGE.get(LanguageKey.COMMON_BTN_SET));
 		btnSetUnitTest.textProperty().bind(Main.LANGUAGE.get(LanguageKey.COMMON_BTN_SET));
 		btnSetCustom.textProperty().bind(Main.LANGUAGE.get(LanguageKey.COMMON_BTN_SET));
 		btnSetCustomProperty.textProperty().bind(Main.LANGUAGE.get(LanguageKey.COMMON_BTN_SET));
@@ -468,8 +473,8 @@ public class IndexController extends BaseController {
 		String daoPackage = txtSqlPackage.getText();
 		String daoName = txtSqlName.getText();
 		String assistPackage = txtAssistPackage.getText();
-		String mapperPackage = txtSqlParamsPackage.getText();
-		String mapperName = txtSqlParamsName.getText();
+		String mapperPackage = txtMapperPackage.getText();
+		String mapperName = txtMapperName.getText();
 		String unitTestPackage = txtUnitTestPackage.getText();
 		String unitTestName = txtUnitTestName.getText();
 		String codeFormat = cboCodeFormat.getValue();
@@ -526,7 +531,7 @@ public class IndexController extends BaseController {
 						Optional.ofNullable(ConfigUtil.getServiceImplConfig(Constant.DEFAULT)).orElse(new ServiceImplConfig().initDefaultValue()));
 			}
 			if (config.getDaoConfig() == null) {
-				config.setDaoConfig(Optional.ofNullable(ConfigUtil.getSQLConfig(Constant.DEFAULT)).orElse(new DaoConfig()));
+				config.setDaoConfig(Optional.ofNullable(ConfigUtil.getSQLConfig(Constant.DEFAULT)).orElse(new DaoConfig().initDefaultValue()));
 			}
 			if (config.getMapperConfig() == null) {
 				config.setMapperConfig(
@@ -567,7 +572,8 @@ public class IndexController extends BaseController {
 		serviceNamePlace = txtServiceName.getText();
 		serviceImplNamePlace = txtServiceImplName.getText();
 		routerNamePlace = txtRouterName.getText();
-		sqlNamePlace = txtSqlName.getText();
+		daoNamePlace = txtSqlName.getText();
+		mapperNamePlace = txtMapperName.getText();
 		unitTestPlace = txtUnitTestName.getText();
 	}
 
@@ -710,7 +716,8 @@ public class IndexController extends BaseController {
 						txtServiceName.setText(serviceNamePlace.replace("{c}", pascalTableName));
 						txtServiceImplName.setText(serviceImplNamePlace.replace("{c}", pascalTableName));
 						txtRouterName.setText(routerNamePlace.replace("{c}", pascalTableName));
-						txtSqlName.setText(sqlNamePlace.replace("{c}", pascalTableName));
+						txtSqlName.setText(daoNamePlace.replace("{c}", pascalTableName));
+						txtMapperName.setText(mapperNamePlace.replace("{c}", pascalTableName));
 						txtUnitTestName.setText(unitTestPlace.replace("{c}", pascalTableName));
 						LOG.debug("将表的数据加载到数据面板成功!");
 					}
@@ -799,7 +806,7 @@ public class IndexController extends BaseController {
 		ConverterUtil.serviceImplConfigToContent(sci, serviceImplContent, className);
 		content.setServiceImpl(serviceImplContent);
 		// dao属性
-		String sqlName = tableName != null ? sqlNamePlace.replace("{c}", StrUtil.unlineToPascal(tableName)) : txtSqlName.getText();
+		String sqlName = tableName != null ? daoNamePlace.replace("{c}", StrUtil.unlineToPascal(tableName)) : txtSqlName.getText();
 		DaoConfig sql = history.getDaoConfig();
 		DaoContent sqlContent = new DaoContent(txtSqlPackage.getText(), sqlName);
 		ConverterUtil.SqlConfigToContent(sql, sqlContent, className);
@@ -823,7 +830,8 @@ public class IndexController extends BaseController {
 		content.setAssist(assistContent);
 		// Mapper属性
 		MapperConfig mapperConfig = history.getMapperConfig();
-		MapperContent mapperContent = new MapperContent(txtSqlParamsPackage.getText(), txtSqlParamsName.getText());
+		String mapperName = tableName != null ? mapperNamePlace.replace("{c}", StrUtil.unlineToPascal(tableName)) : txtMapperName.getText();
+		MapperContent mapperContent = new MapperContent(txtMapperPackage.getText(), mapperName);
 		ConverterUtil.mapperConfigToContent(mapperConfig, mapperContent, className);
 		content.setMapper(mapperContent);
 		// 自定义包类属性
@@ -888,7 +896,7 @@ public class IndexController extends BaseController {
 			EntityConfig config = historyConfig.getEntityConfig();
 			if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
 				CreateFileUtil.createFile(content, config.getTemplateName(), projectPath, txtEntityPackage.getText(),
-						entityNamePlace.replace("{c}", entityName) + ".java", codeFormat, config.isOverrideFile());
+						entityNamePlace.replace("{c}", entityName) + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
 			}
 			LOG.debug("执行将" + tableName + "生成实体类-->成功!");
 		} catch (Exception e) {
@@ -899,7 +907,7 @@ public class IndexController extends BaseController {
 			ServiceConfig config = historyConfig.getServiceConfig();
 			if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
 				CreateFileUtil.createFile(content, config.getTemplateName(), projectPath, txtServicePackage.getText(),
-						serviceNamePlace.replace("{c}", entityName) + ".java", codeFormat, config.isOverrideFile());
+						serviceNamePlace.replace("{c}", entityName) + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
 			}
 			LOG.debug("执行将" + tableName + "生成Service-->成功!");
 		} catch (Exception e) {
@@ -910,7 +918,7 @@ public class IndexController extends BaseController {
 			ServiceImplConfig config = historyConfig.getServiceImplConfig();
 			if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
 				CreateFileUtil.createFile(content, config.getTemplateName(), projectPath, txtServiceImplPackage.getText(),
-						serviceImplNamePlace.replace("{c}", entityName) + ".java", codeFormat, config.isOverrideFile());
+						serviceImplNamePlace.replace("{c}", entityName) + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
 			}
 			LOG.debug("执行将" + tableName + "生成ServiceImpl-->成功!");
 		} catch (Exception e) {
@@ -921,7 +929,7 @@ public class IndexController extends BaseController {
 			DaoConfig config = historyConfig.getDaoConfig();
 			if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
 				CreateFileUtil.createFile(content, config.getTemplateName(), projectPath, txtSqlPackage.getText(),
-						sqlNamePlace.replace("{c}", entityName) + ".java", codeFormat, config.isOverrideFile());
+						daoNamePlace.replace("{c}", entityName) + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
 			}
 			LOG.debug("执行将" + tableName + "生成DAO-->成功!");
 		} catch (Exception e) {
@@ -931,8 +939,14 @@ public class IndexController extends BaseController {
 		try {
 			MapperConfig config = historyConfig.getMapperConfig();
 			if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
-				CreateFileUtil.createFile(content, config.getTemplateName(), projectPath, txtSqlParamsPackage.getText(),
-						txtSqlParamsName.getText() + ".java", codeFormat, config.isOverrideFile());
+				if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
+					String templateName = config.getTemplateName();
+					if (templateName.equals(Constant.TEMPLATE_NAME_MAPPER)) {
+						templateName = databaseConfig.getDbType() + Constant.TEMPLATE_NAME_MAPPER_SUFFIX;
+					}
+					CreateFileUtil.createFile(content, templateName, projectPath, txtMapperPackage.getText(),
+							mapperNamePlace.replace("{c}", entityName), codeFormat, config.isOverrideFile());
+				}
 			}
 			LOG.debug("执行生成Mapper-->成功!");
 		} catch (Exception e) {
@@ -943,7 +957,7 @@ public class IndexController extends BaseController {
 			ControllerConfig config = historyConfig.getControllerConfig();
 			if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
 				CreateFileUtil.createFile(content, config.getTemplateName(), projectPath, txtRouterPackage.getText(),
-						routerNamePlace.replace("{c}", entityName) + ".java", codeFormat, config.isOverrideFile());
+						routerNamePlace.replace("{c}", entityName) + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
 			}
 			LOG.debug("执行将" + tableName + "生成Router-->成功!");
 		} catch (Exception e) {
@@ -954,7 +968,7 @@ public class IndexController extends BaseController {
 			UnitTestConfig config = historyConfig.getUnitTestConfig();
 			if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
 				CreateFileUtil.createFile(content, config.getTemplateName(), projectPath, txtUnitTestPackage.getText(),
-						unitTestPlace.replace("{c}", entityName) + ".java", codeFormat, config.isOverrideFile());
+						unitTestPlace.replace("{c}", entityName) + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
 			}
 			LOG.debug("执行将" + tableName + "生成单元测试-->成功!");
 		} catch (Exception e) {
@@ -965,12 +979,8 @@ public class IndexController extends BaseController {
 			SqlAssistConfig config = historyConfig.getAssistConfig();
 			if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
 				CreateFileUtil.createFile(content, config.getTemplateName(), projectPath, txtAssistPackage.getText(),
-						txtAssistName.getText() + ".java", codeFormat, config.isOverrideFile());
+						txtAssistName.getText() + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
 			}
-			CreateFileUtil.createFile(content, Constant.TEMPLATE_NAME_SQL_PROPERTY_VALUE, projectPath, txtAssistPackage.getText(),
-					Constant.SQL_PROPERTY_VALUE + ".java", codeFormat, config.isOverrideFile());
-			CreateFileUtil.createFile(content, Constant.TEMPLATE_NAME_SQL_WHERE_CONDITION, projectPath, txtAssistPackage.getText(),
-					Constant.SQL_WHERE_CONDITION + ".java", codeFormat, config.isOverrideFile());
 			LOG.debug("执行将" + tableName + "生成SqlAssist-->成功!");
 		} catch (Exception e) {
 			LOG.error("执行将" + tableName + "生成SqlAssist-->失败:", e);
@@ -982,7 +992,7 @@ public class IndexController extends BaseController {
 				if (!StrUtil.isNullOrEmpty(custom.getTemplateValue())) {
 					try {
 						CreateFileUtil.createFile(content, custom.getTemplateValue(), projectPath, custom.getPackageName(),
-								custom.getClassName() + ".java", codeFormat, config.isOverrideFile());
+								custom.getClassName() + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
 					} catch (Exception e) {
 						LOG.error("执行生成自定义生成包类-->失败:", e);
 					}
@@ -1029,7 +1039,7 @@ public class IndexController extends BaseController {
 						if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
 							updateMessage(runCreateTipsText + " {t} ...".replace("{t}", txtEntityName.getText() + ""));
 							CreateFileUtil.createFile(content, config.getTemplateName(), projectPath, txtEntityPackage.getText(),
-									txtEntityName.getText() + ".java", codeFormat, config.isOverrideFile());
+									txtEntityName.getText() + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
 						}
 						LOG.debug("执行生成实体类-->成功!");
 					} catch (Exception e) {
@@ -1043,7 +1053,7 @@ public class IndexController extends BaseController {
 						if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
 							updateMessage(runCreateTipsText + " {t} ...".replace("{t}", txtServiceName.getText() + ""));
 							CreateFileUtil.createFile(content, config.getTemplateName(), projectPath, txtServicePackage.getText(),
-									txtServiceName.getText() + ".java", codeFormat, config.isOverrideFile());
+									txtServiceName.getText() + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
 						}
 						LOG.debug("执行生成Service-->成功!");
 					} catch (Exception e) {
@@ -1057,7 +1067,7 @@ public class IndexController extends BaseController {
 						if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
 							updateMessage(runCreateTipsText + " {t} ...".replace("{t}", txtServiceImplName.getText() + ""));
 							CreateFileUtil.createFile(content, config.getTemplateName(), projectPath, txtServiceImplPackage.getText(),
-									txtServiceImplName.getText() + ".java", codeFormat, config.isOverrideFile());
+									txtServiceImplName.getText() + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
 						}
 						LOG.debug("执行生成ServiceImpl-->成功!");
 					} catch (Exception e) {
@@ -1071,7 +1081,7 @@ public class IndexController extends BaseController {
 						if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
 							updateMessage(runCreateTipsText + " {t} ...".replace("{t}", txtSqlName.getText() + ""));
 							CreateFileUtil.createFile(content, config.getTemplateName(), projectPath, txtSqlPackage.getText(),
-									txtSqlName.getText() + ".java", codeFormat, config.isOverrideFile());
+									txtSqlName.getText() + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
 						}
 						LOG.debug("执行生成DAO-->成功!");
 					} catch (Exception e) {
@@ -1085,7 +1095,7 @@ public class IndexController extends BaseController {
 						if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
 							updateMessage(runCreateTipsText + " {t} ...".replace("{t}", txtRouterName.getText() + ""));
 							CreateFileUtil.createFile(content, config.getTemplateName(), projectPath, txtRouterPackage.getText(),
-									txtRouterName.getText() + ".java", codeFormat, config.isOverrideFile());
+									txtRouterName.getText() + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
 						}
 						LOG.debug("执行生成Controller-->成功!");
 					} catch (Exception e) {
@@ -1099,7 +1109,7 @@ public class IndexController extends BaseController {
 						if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
 							updateMessage(runCreateTipsText + " {t} ...".replace("{t}", txtUnitTestName.getText() + ""));
 							CreateFileUtil.createFile(content, config.getTemplateName(), projectPath, txtUnitTestPackage.getText(),
-									txtUnitTestName.getText() + ".java", codeFormat, config.isOverrideFile());
+									txtUnitTestName.getText() + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
 						}
 						LOG.debug("执行生成单元测试-->成功!");
 					} catch (Exception e) {
@@ -1113,29 +1123,29 @@ public class IndexController extends BaseController {
 						if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
 							updateMessage(runCreateTipsText + " {t} ...".replace("{t}", txtAssistName.getText() + ""));
 							CreateFileUtil.createFile(content, config.getTemplateName(), projectPath, txtAssistPackage.getText(),
-									txtAssistName.getText() + ".java", codeFormat, config.isOverrideFile());
+									txtAssistName.getText() + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
 						}
-						CreateFileUtil.createFile(content, Constant.TEMPLATE_NAME_SQL_PROPERTY_VALUE, projectPath, txtAssistPackage.getText(),
-								Constant.SQL_PROPERTY_VALUE + ".java", codeFormat, config.isOverrideFile());
-						CreateFileUtil.createFile(content, Constant.TEMPLATE_NAME_SQL_WHERE_CONDITION, projectPath, txtAssistPackage.getText(),
-								Constant.SQL_WHERE_CONDITION + ".java", codeFormat, config.isOverrideFile());
 						LOG.debug("执行生成SqlAssist-->成功!");
 					} catch (Exception e) {
 						updateMessage("执行生成SqlAssist:" + txtAssistName.getText() + "失败:" + e);
 						LOG.error("执行生成SqlAssist-->失败:", e);
 					}
-					// 生成SqlAndParams
+					// 生成Mapper
 					updateProgress(8, 9);
 					try {
 						MapperConfig config = historyConfig.getMapperConfig();
 						if (!StrUtil.isNullOrEmpty(config.getTemplateName())) {
-							updateMessage(runCreateTipsText + " {t} ...".replace("{t}", txtSqlParamsName.getText() + ""));
-							CreateFileUtil.createFile(content, config.getTemplateName(), projectPath, txtSqlParamsPackage.getText(),
-									txtSqlParamsName.getText() + ".java", codeFormat, config.isOverrideFile());
+							updateMessage(runCreateTipsText + " {t} ...".replace("{t}", txtMapperPackage.getText() + ""));
+							String templateName = config.getTemplateName();
+							if (templateName.equals(Constant.TEMPLATE_NAME_MAPPER)) {
+								templateName = selectedDatabaseConfig.getDbType() + Constant.TEMPLATE_NAME_MAPPER_SUFFIX;
+							}
+							CreateFileUtil.createFile(content, templateName, projectPath, txtMapperPackage.getText(), txtMapperName.getText(), codeFormat,
+									config.isOverrideFile());
 						}
 						LOG.debug("执行生成Mapper-->成功!");
 					} catch (Exception e) {
-						updateMessage("执行生成Mapper:" + txtSqlParamsName.getText() + "失败:" + e);
+						updateMessage("执行生成Mapper:" + txtMapperName.getText() + "失败:" + e);
 						LOG.error("执行生成Mapper-->失败:", e);
 					}
 
@@ -1146,7 +1156,7 @@ public class IndexController extends BaseController {
 								try {
 									updateMessage(runCreateTipsText + " {t} ...".replace("{t}", custom.getClassName() + ""));
 									CreateFileUtil.createFile(content, custom.getTemplateValue(), projectPath, custom.getPackageName(),
-											custom.getClassName() + ".java", codeFormat, config.isOverrideFile());
+											custom.getClassName() + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
 								} catch (Exception e) {
 									updateMessage("执行生成自定义生成包类:" + custom.getClassName() + "失败:" + e);
 									LOG.error("执行生成自定义生成包类-->失败:", e);
@@ -1316,7 +1326,7 @@ public class IndexController extends BaseController {
 	 * @param event
 	 */
 	public void onSetRouter(ActionEvent event) {
-		SetRouterController controller = (SetRouterController) loadFXMLPage("Router Setting", FXMLPage.SET_ROUTER, false);
+		SetRouterController controller = (SetRouterController) loadFXMLPage("Controller Setting", FXMLPage.SET_ROUTER, false);
 		controller.setIndexController(this);
 		controller.showDialogStage();
 		controller.init();
@@ -1328,7 +1338,7 @@ public class IndexController extends BaseController {
 	 * @param event
 	 */
 	public void onSetSQL(ActionEvent event) {
-		SetSqlController controller = (SetSqlController) loadFXMLPage("SQL Setting", FXMLPage.SET_SQL, false);
+		SetSqlController controller = (SetSqlController) loadFXMLPage("DAO Setting", FXMLPage.SET_SQL, false);
 		controller.setIndexController(this);
 		controller.showDialogStage();
 		controller.init();
@@ -1340,21 +1350,19 @@ public class IndexController extends BaseController {
 	 * @param event
 	 */
 	public void onSetSqlAssist(ActionEvent event) {
-		SetSqlAssistController controller = (SetSqlAssistController) loadFXMLPage("SqlAssist Setting", FXMLPage.SET_ASSIST, false);
+		SetSqlAssistController controller = (SetSqlAssistController) loadFXMLPage("Assist Setting", FXMLPage.SET_ASSIST, false);
 		controller.setIndexController(this);
 		controller.showDialogStage();
 		controller.init();
 	}
-
 
 	/**
 	 * 打开设置SqlAndParams
 	 * 
 	 * @param event
 	 */
-	public void onSetSqlAndParams(ActionEvent event) {
-		SetSqlAndParamsController controller = (SetSqlAndParamsController) loadFXMLPage("SqlAndParams Setting", FXMLPage.SET_SQL_AND_PARAMS,
-				false);
+	public void onSetMapper(ActionEvent event) {
+		SetMapperController controller = (SetMapperController) loadFXMLPage("Mapper Setting", FXMLPage.SET_MAPPER, false);
 		controller.setIndexController(this);
 		controller.showDialogStage();
 		controller.init();

@@ -13,6 +13,7 @@ import com.szmirren.models.HistoryConfigCVF;
 import com.szmirren.options.HistoryConfig;
 import com.szmirren.view.AlertUtil;
 
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -62,7 +63,9 @@ public class HistoryConfigController extends BaseController {
 		tblConfigInfo.getColumns().add(tdInfo);
 		tblConfigInfo.getColumns().add(tdOperation);
 		tblConfigInfo.setItems(data);
-		tblConfigInfo.setPlaceholder(new Label("尚未添加任何配置信息;可以通过首页保存配置新增"));
+		StringProperty property = Main.LANGUAGE.get(LanguageKey.HISTORY_CONFIG_TABLE_TIPS);
+		String tips = property == null ? "尚未添加任何配置信息;可以通过首页保存配置新增" : property.get();
+		tblConfigInfo.setPlaceholder(new Label(tips));
 		// 设置列的大小自适应
 		tblConfigInfo.setColumnResizePolicy(resize -> {
 			double width = resize.getTable().getWidth();

@@ -18,7 +18,7 @@ public class DaoConfig {
 	/** 设置的tableItem */
 	private List<TableAttributeKeyValue> tableItem = new ArrayList<>();
 	/** 生成模板的名字 */
-	private String templateName = Constant.TEMPLATE_NAME_SQL;
+	private String templateName = Constant.TEMPLATE_NAME_DAO;
 	/** 是否覆盖原文件 */
 	private boolean overrideFile = true;
 
@@ -61,6 +61,20 @@ public class DaoConfig {
 	 * @return
 	 */
 	public DaoConfig initDefaultValue() {
+		tableItem.add(new TableAttributeKeyValue("count", "get{C}RowCount", "查询{C}数据总行数,不需要条件时传null"));
+		tableItem.add(new TableAttributeKeyValue("select", "select{C}", "查询所有{C}数据,不需要条件时传null"));
+		tableItem.add(new TableAttributeKeyValue("selectById", "select{C}ById", "通过id查询{C}数据"));
+		tableItem.add(new TableAttributeKeyValue("selectByObjSingle", "select{C}ObjSingle", "通过{C}对象中不为null的属性作为条件,查询出符合条件的第一个{C}数据"));
+		tableItem.add(new TableAttributeKeyValue("selectByObj", "select{C}ByObj", "通过{C}对象中不为null的属性作为条件,查询出符合条件的所有{C}数据"));
+		tableItem.add(new TableAttributeKeyValue("insertAll", "insert{C}", "将{C}保存到数据库中,包括null值"));
+		tableItem.add(new TableAttributeKeyValue("insertNotNull", "insertNotNull{C}", "将{C}中属性不为null的数据保存到数据库中"));
+		tableItem.add(new TableAttributeKeyValue("insertBatch", "insert{C}ByBatch", "将{C}保存到数据库中,包括null值"));
+		tableItem.add(new TableAttributeKeyValue("deleteById", "delete{C}ById", "通过id删除{C}数据"));
+		tableItem.add(new TableAttributeKeyValue("deleteByAssist", "delete{C}ByAssist", "通过Assis删除{C}数据"));
+		tableItem.add(new TableAttributeKeyValue("updateAllById", "update{C}ById", "更新{C}到数据库中,包括null值,条件为对象中的主键属性"));
+		tableItem.add(new TableAttributeKeyValue("updateNotNullById", "updateNotNull{C}ById", "更新{C}中属性不为null的数据到数据库中,条件为对象中的主键属性"));
+		tableItem.add(new TableAttributeKeyValue("updateAllByAssist", "update{C}", "更新{C}到数据库中,包括null值,条件为Assist设置的条件"));
+		tableItem.add(new TableAttributeKeyValue("updateNotNullByAssist", "updateNotNull{C}", "更新{C}中属性不为null的数据到数据库中,条件为Assist设置的条件"));
 		return this;
 	}
 

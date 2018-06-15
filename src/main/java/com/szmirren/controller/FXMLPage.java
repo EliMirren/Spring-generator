@@ -28,7 +28,7 @@ public enum FXMLPage {
 	/** AbstractSQL设置页面 */
 	SET_ABSTRACT_SQL("FXML/SetAbstractSQL.fxml"),
 	/** SQLAssist设置页面 */
-	SET_SQL_AND_PARAMS("FXML/SetSqlAndParams.fxml"),
+	SET_MAPPER("FXML/SetMapper.fxml"),
 	/** SQLAssist设置页面 */
 	SET_UNIT_TEST("FXML/SetUnitTest.fxml"),
 	/** SetCustomProperty设置页面 */

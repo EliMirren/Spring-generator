@@ -51,7 +51,10 @@ public class CreateFileUtil {
 			}
 		}
 		Configuration config = new Configuration(Configuration.VERSION_2_3_23);
-		String tempPath = Paths.get(Constant.TEMPLATE_DIR_NAME).toFile().getName();
+		// TODO 修改为读取外部的
+		// String tempPath =
+		// Paths.get(Constant.TEMPLATE_DIR_NAME).toFile().getName();
+		String tempPath = Thread.currentThread().getContextClassLoader().getResource(Constant.TEMPLATE_DIR_NAME).getFile();
 		config.setDirectoryForTemplateLoading(new File(tempPath));
 		config.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_23));
 		config.setDefaultEncoding("utf-8");

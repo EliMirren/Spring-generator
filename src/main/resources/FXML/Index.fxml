@@ -96,7 +96,7 @@
 																		<Font size="16.0" />
 																	</font>
 																</TextField>
-																<TextField fx:id="txtSqlParamsName" disable="true" text="{c}Mapper.xml" GridPane.columnIndex="3" GridPane.rowIndex="6">
+																<TextField fx:id="txtMapperName" text="{c}Mapper.xml" GridPane.columnIndex="3" GridPane.rowIndex="6">
 																	<font>
 																		<Font size="16.0" />
 																	</font>
@@ -156,7 +156,7 @@
 																		<Font size="20.0" />
 																	</font>
 																</Label>
-																<Label fx:id="lblSqlParamsName" text="映射文件名称:" GridPane.columnIndex="2" GridPane.rowIndex="6">
+																<Label fx:id="lblMapperName" text="映射文件名称:" GridPane.columnIndex="2" GridPane.rowIndex="6">
 																	<font>
 																		<Font size="20.0" />
 																	</font>
@@ -194,7 +194,7 @@
 																		<Font size="16.0" />
 																	</font>
 																</TextField>
-																<TextField fx:id="txtSqlParamsPackage" text="com.common" GridPane.columnIndex="1" GridPane.rowIndex="6">
+																<TextField fx:id="txtMapperPackage" text="mappers" GridPane.columnIndex="1" GridPane.rowIndex="6">
 																	<font>
 																		<Font size="16.0" />
 																	</font>
@@ -259,7 +259,7 @@
 																		<Font size="20.0" />
 																	</font>
 																</Label>
-																<Label fx:id="lblSqlParamsPackage" text="映射文件包名:" GridPane.rowIndex="6">
+																<Label fx:id="lblMapperPackage" text="映射文件包名:" GridPane.rowIndex="6">
 																	<font>
 																		<Font size="20.0" />
 																	</font>
@@ -372,7 +372,7 @@
 																		<Insets left="5.0" />
 																	</GridPane.margin>
 																</Button>
-																<Button fx:id="btnSetSqlAndParams" mnemonicParsing="false" onAction="#onSetSqlAndParams" prefHeight="24.0" prefWidth="61.0" text="设置" GridPane.columnIndex="4" GridPane.rowIndex="6">
+																<Button fx:id="btnSetMapper" mnemonicParsing="false" onAction="#onSetMapper" prefHeight="24.0" prefWidth="61.0" text="设置" GridPane.columnIndex="4" GridPane.rowIndex="6">
 																	<cursor>
 																		<Cursor fx:constant="HAND" />
 																	</cursor>

@@ -19,6 +19,8 @@ public interface LanguageKey {
 	static final String INDEX_TIPS_SELECT_TABLE_NAME = "index.selectTableTips";
 	/** 首页-提示先选择表名或者全库生成 */
 	static final String INDEX_TIPS_CREATE_TABLE = "index.createTableTips";
+	/** 首页-配置文件的配置信息表格提示 */
+	static final String HISTORY_CONFIG_TABLE_TIPS = "historyConfig.tableTips";
 	// ========================通用区域===============================
 	/** 通用设置按钮 */
 	static final String COMMON_BTN_SET = "common.btnSet";
@@ -61,8 +63,8 @@ public interface LanguageKey {
 	static final String INDEX_LBL_ASSIST_PACKAGE = "index.lblAssistPackage";
 	/** 首页-AbstractSQL包名 */
 	static final String INDEX_LBL_ABSTRACT_SQL_PACKAGE = "index.lblAbstractSqlPackage";
-	/** 首页-SQLAndParams包名 */
-	static final String INDEX_LBL_SQL_AND_PARAMS_PACKAGE = "index.lblSqlParamsPackage";
+	/** 首页-Mapper包名 */
+	static final String INDEX_LBL_MAPPER_PACKAGE = "index.lblSqlParamsPackage";
 	/** 首页-单元测试包名 */
 	static final String INDEX_LBL_UNIT_TEST_PACKAGE = "index.lblUnitTestPackage";
 	/** 首页-实体类类名 */
@@ -80,7 +82,7 @@ public interface LanguageKey {
 	/** 首页-AbstractSql类名 */
 	static final String INDEX_LBL_ABSTRACT_SQL_NAME = "index.lblAbstractSqlName";
 	/** 首页-SqlAndParams类名 */
-	static final String INDEX_LBL_SQL_AND_PARAMS_NAME = "index.lblSqlParamsName";
+	static final String INDEX_LBL_MAPPER_NAME = "index.lblSqlParamsName";
 	/** 首页-单元测试类名 */
 	static final String INDEX_LBL_UNIT_TEST_NAME = "index.lblUnitTestName";
 

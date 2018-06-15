@@ -12,7 +12,7 @@ import com.szmirren.common.LanguageKey;
 import com.szmirren.common.StrUtil;
 import com.szmirren.models.TableAttributeKeyValue;
 import com.szmirren.models.TableAttributeKeyValueEditingCell;
-import com.szmirren.options.SqlAndParamsConfig;
+import com.szmirren.options.MapperConfig;
 import com.szmirren.view.AlertUtil;
 
 import javafx.beans.property.Property;
@@ -31,8 +31,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
@@ -43,7 +43,7 @@ import javafx.util.Callback;
  * @author <a href="http://szmirren.com">Mirren</a>
  *
  */
-public class SetSqlAndParamsController extends BaseController {
+public class SetMapperController extends BaseController {
 	private Logger LOG = Logger.getLogger(this.getClass());
 	/** 首页的控制器 */
 	private IndexController indexController;
@@ -130,8 +130,8 @@ public class SetSqlAndParamsController extends BaseController {
 	 * 初始化
 	 */
 	public void init() {
-		LOG.debug("初始化SetSqlAndParamsController...");
-		LOG.debug("初始化SetSqlAndParamsController->初始化属性...");
+		LOG.debug("初始化SetMapperController...");
+		LOG.debug("初始化SetMapperController->初始化属性...");
 		// 添加右键删除属性
 		StringProperty property = Main.LANGUAGE.get(LanguageKey.SET_TBL_MENU_ITEM_DELETE);
 		String delMenu = property.get() == null ? "删除该属性" : property.get();
@@ -169,17 +169,17 @@ public class SetSqlAndParamsController extends BaseController {
 			((TableAttributeKeyValue) t.getTableView().getItems().get(t.getTablePosition().getRow())).setDescribe(t.getNewValue());
 		});
 		tblProperty.setItems(tblPropertyValues);
-		LOG.debug("初始化SetSqlAndParamsController->初始化模板文件名选择...");
+		LOG.debug("初始化SetMapperController->初始化模板文件名选择...");
 		cboTemplate.getItems().addAll(indexController.getTemplateNameItems());
-		if (indexController.getTemplateNameItems().contains(Constant.TEMPLATE_NAME_SQL_AND_PARAMS)) {
-			cboTemplate.setValue(Constant.TEMPLATE_NAME_SQL_AND_PARAMS);
+		if (indexController.getTemplateNameItems().contains(Constant.TEMPLATE_NAME_MAPPER)) {
+			cboTemplate.setValue(Constant.TEMPLATE_NAME_MAPPER);
 		}
-		LOG.debug("初始化SetSqlAndParamsController->初始化配置信息...");
+		LOG.debug("初始化SetMapperController->初始化配置信息...");
 		if (indexController.getHistoryConfig() != null) {
-			if (indexController.getHistoryConfig().getSqlAndParamsConfig() == null) {
+			if (indexController.getHistoryConfig().getMapperConfig() == null) {
 				loadConfig(getConfig());
 			} else {
-				loadConfig(indexController.getHistoryConfig().getSqlAndParamsConfig());
+				loadConfig(indexController.getHistoryConfig().getMapperConfig());
 			}
 		} else {
 			String configName = indexController.getHistoryConfigName();
@@ -189,7 +189,7 @@ public class SetSqlAndParamsController extends BaseController {
 			loadConfig(getConfig(configName));
 		}
 		initLanguage();
-		LOG.debug("初始化SetSqlAndParamsController-->成功!");
+		LOG.debug("初始化SetMapperController-->成功!");
 	}
 
 	/**
@@ -217,7 +217,7 @@ public class SetSqlAndParamsController extends BaseController {
 	 * 
 	 * @return
 	 */
-	public SqlAndParamsConfig getConfig() {
+	public MapperConfig getConfig() {
 		return getConfig(Constant.DEFAULT);
 	}
 
@@ -227,10 +227,10 @@ public class SetSqlAndParamsController extends BaseController {
 	 * @param name
 	 * @return
 	 */
-	public SqlAndParamsConfig getConfig(String name) {
+	public MapperConfig getConfig(String name) {
 		LOG.debug("执行从数据库中获取配置文件...");
 		try {
-			SqlAndParamsConfig config = ConfigUtil.getSqlAndParamsConfig(name);
+			MapperConfig config = ConfigUtil.getSqlAndParamsConfig(name);
 			LOG.debug("执行获取配置文件-->成功!");
 			if (config != null) {
 				return config;
@@ -239,7 +239,7 @@ public class SetSqlAndParamsController extends BaseController {
 			LOG.error("执行从数据库中获取配置文件-->失败:", e);
 			AlertUtil.showErrorAlert("执行获得配置文件-->失败:" + e);
 		}
-		return new SqlAndParamsConfig();
+		return new MapperConfig();
 	}
 
 	/**
@@ -248,9 +248,9 @@ public class SetSqlAndParamsController extends BaseController {
 	 * @param name
 	 * @return
 	 */
-	public SqlAndParamsConfig getThisConfig() {
+	public MapperConfig getThisConfig() {
 		LOG.debug("执行获取当前页面配置文件...");
-		SqlAndParamsConfig config = new SqlAndParamsConfig(tblPropertyValues, cboTemplate.getValue(), chkOverrideFile.isSelected());
+		MapperConfig config = new MapperConfig(tblPropertyValues, cboTemplate.getValue(), chkOverrideFile.isSelected());
 		LOG.debug("执行获取当前页面配置文件-->成功!");
 		return config;
 	}
@@ -260,7 +260,7 @@ public class SetSqlAndParamsController extends BaseController {
 	 * 
 	 * @param config
 	 */
-	public void loadConfig(SqlAndParamsConfig config) {
+	public void loadConfig(MapperConfig config) {
 		LOG.debug("执行加载配置文件到当前页面...");
 		tblPropertyValues.clear();
 		if (config != null && config.getTableItem() != null) {
@@ -270,7 +270,7 @@ public class SetSqlAndParamsController extends BaseController {
 		}
 		if (config.getTemplateName() != null) {
 			String templateName = config.getTemplateName();
-			if (!indexController.getTemplateNameItems().contains(templateName)) {
+			if (!indexController.getTemplateNameItems().contains(templateName) && !templateName.equals(Constant.TEMPLATE_NAME_MAPPER)) {
 				AlertUtil.showWarnAlert("在模板文件夹中没有发现名字为" + templateName + "的模板,系统已经为你加载配置,如果已经不存在该模板请重新选择");
 			}
 			cboTemplate.setValue(templateName);
@@ -333,7 +333,7 @@ public class SetSqlAndParamsController extends BaseController {
 	 * @param event
 	 */
 	public void onConfirm(ActionEvent event) {
-		indexController.getHistoryConfig().setSqlAndParamsConfig(getThisConfig());
+		indexController.getHistoryConfig().setMapperConfig(getThisConfig());
 		getDialogStage().close();
 	}
 

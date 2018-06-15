@@ -176,10 +176,10 @@ public class SetRouterController extends BaseController {
 		}
 		LOG.debug("初始化SetRouterController->初始化配置信息...");
 		if (indexController.getHistoryConfig() != null) {
-			if (indexController.getHistoryConfig().getRouterConfig() == null) {
+			if (indexController.getHistoryConfig().getControllerConfig() == null) {
 				loadConfig(getConfig());
 			} else {
-				loadConfig(indexController.getHistoryConfig().getRouterConfig());
+				loadConfig(indexController.getHistoryConfig().getControllerConfig());
 			}
 		} else {
 			String configName = indexController.getHistoryConfigName();
@@ -333,7 +333,7 @@ public class SetRouterController extends BaseController {
 	 * @param event
 	 */
 	public void onConfirm(ActionEvent event) {
-		indexController.getHistoryConfig().setRouterConfig(getThisConfig());
+		indexController.getHistoryConfig().setControllerConfig(getThisConfig());
 		getDialogStage().close();
 	}
 
