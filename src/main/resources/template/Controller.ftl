@@ -1,6 +1,7 @@
 package ${content.controller.classPackage};
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +41,7 @@ public class ${content.controller.className} {
 	 * @return
 	 */
 	@GetMapping(value = "${content.controller.item.r_getById.value}", produces = {"application/json;charset=UTF-8"})
-	public String ${content.controller.item.f_getById.value}(${content.entity.primaryKeyAttr.javaType} id) {
+	public String ${content.controller.item.f_getById.value}(@PathVariable(name="id") ${content.entity.primaryKeyAttr.javaType} id) {
 		return ${content.service.className?uncap_first}.${content.service.item.selectById.value!}(id);
 	}
 	</#if>
@@ -50,7 +51,7 @@ public class ${content.controller.className} {
 	 * @param id
 	 * @return
 	 */
-	@PostMapping(value = " ${content.controller.item.r_saveNotNull.value!}", produces = {"application/json;charset=UTF-8"})
+	@PostMapping(value = "${content.controller.item.r_saveNotNull.value!}", produces = {"application/json;charset=UTF-8"})
 	public String ${content.controller.item.f_saveNotNull.value!}(${content.entity.className} value) {
 		return ${content.service.className?uncap_first}.${content.service.item.insertNotNull.value!}(value);
 	}
@@ -72,7 +73,7 @@ public class ${content.controller.className} {
 	 * @return
 	 */
 	@DeleteMapping(value = "${content.controller.item.r_deleteById.value!}", produces = {"application/json;charset=UTF-8"})
-	public String ${content.controller.item.f_deleteById.value!}(${content.entity.primaryKeyAttr.javaType} id) {
+	public String ${content.controller.item.f_deleteById.value!}(@PathVariable(name="id") ${content.entity.primaryKeyAttr.javaType} id) {
 		return ${content.service.className?uncap_first}.${content.service.item.deleteById.value!}(id);
 	}
 	</#if>
