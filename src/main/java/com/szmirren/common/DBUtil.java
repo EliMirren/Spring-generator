@@ -92,7 +92,8 @@ public class DBUtil {
 			if (config.getDbType().equalsIgnoreCase(Constant.POSTGRE_SQL)) {
 				rs = md.getTables(null, null, null, types);
 			} else {
-				rs = md.getTables(null, config.getUserName().toUpperCase(), null, types);
+				String catalog = conn.getCatalog() == null ? null : conn.getCatalog();
+				rs = md.getTables(catalog, config.getUserName().toUpperCase(), "%%", types);
 			}
 			while (rs.next()) {
 				tables.add(rs.getString(3));

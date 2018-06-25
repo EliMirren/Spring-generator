@@ -9,7 +9,7 @@ package com.szmirren.models;
 public enum DBType {
 	Oracle("oracle.jdbc.driver.OracleDriver", "jdbc:oracle:thin:@%s:%s:%s"),
 	OracleServiceName("oracle.jdbc.driver.OracleDriver", "jdbc:oracle:thin:@%s:%s/%s"),
-	MySQL("com.mysql.jdbc.Driver", "jdbc:mysql://%s:%s/%s?useUnicode=true&useSSL=false&characterEncoding=%s"), 
+	MySQL("com.mysql.cj.jdbc.Driver", "jdbc:mysql://%s:%s/%s?useUnicode=true&useSSL=false&characterEncoding=%s&serverTimezone=UTC"), 
 	SqlServer("com.microsoft.sqlserver.jdbc.SQLServerDriver","jdbc:sqlserver://%s:%s;databaseName=%s"), 
 	PostgreSQL("org.postgresql.Driver","jdbc:postgresql://%s:%s/%s");
 	private final String driverClass;
