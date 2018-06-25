@@ -116,7 +116,7 @@ public class DBUtil {
 	public static List<TableAttributeEntity> getTableColumns(DatabaseConfig config, String tableName) throws Exception {
 		Connection conn = getConnection(config);
 		DatabaseMetaData md = conn.getMetaData();
-		ResultSet rs = md.getColumns(null, null, tableName, null);
+		ResultSet rs = md.getColumns(conn.getCatalog(), "%%", tableName, "%%");
 		Map<String, TableAttributeEntity> columnMap = new HashMap<>();
 		while (rs.next()) {
 			TableAttributeEntity attr = new TableAttributeEntity();
@@ -151,7 +151,7 @@ public class DBUtil {
 	public static String getTablePrimaryKey(DatabaseConfig config, String tableName) throws Exception {
 		Connection conn = getConnection(config);
 		DatabaseMetaData md = conn.getMetaData();
-		ResultSet rs = md.getPrimaryKeys(null, null, tableName);
+		ResultSet rs = md.getPrimaryKeys(conn.getCatalog(), conn.getSchema(), tableName);
 		while (rs.next()) {
 			return rs.getString("COLUMN_NAME");
 		}
