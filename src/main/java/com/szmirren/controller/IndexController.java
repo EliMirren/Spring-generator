@@ -32,6 +32,7 @@ import com.szmirren.entity.MapperContent;
 import com.szmirren.entity.ServiceContent;
 import com.szmirren.entity.ServiceImplContent;
 import com.szmirren.entity.SqlAssistContent;
+import com.szmirren.entity.TableContent;
 import com.szmirren.entity.UnitTestContent;
 import com.szmirren.models.TableAttributeEntity;
 import com.szmirren.models.TableAttributeKeyValueTemplate;
@@ -772,6 +773,8 @@ public class IndexController extends BaseController {
 	/**
 	 * 获得模板需要的上下文
 	 * 
+	 * @param databaseConfig
+	 *          数据库配置文件
 	 * @param tableName
 	 *          表的名字,如果表名不为空,将类名设置为默认值占位表名,如果直接使用版面数据输入null
 	 * @return
@@ -784,6 +787,10 @@ public class IndexController extends BaseController {
 		DatabaseContent databaseContent = new DatabaseContent();
 		ConverterUtil.databaseConfigToContent(databaseConfig, databaseContent);
 		content.setDatabase(databaseContent);
+
+		// 数据库表属性
+		TableContent tableContent = DBUtil.getTableAttribute(databaseConfig, tableName);
+		content.setTable(tableContent);
 		// 实体类属性
 		EntityConfig ec = getThisHistoryConfigAndInit(databaseConfig, tableName != null ? tableName : selectedTableName).getEntityConfig();
 
