@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -1009,8 +1008,11 @@ public class IndexController extends BaseController {
 			for (TableAttributeKeyValueTemplate custom : config.getTableItem()) {
 				if (!StrUtil.isNullOrEmpty(custom.getTemplateValue())) {
 					try {
-						CreateFileUtil.createFile(content, custom.getTemplateValue(), projectPath, custom.getPackageName(),
-								custom.getClassName() + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
+						String loCase = StrUtil.fristToLoCase(entityName);
+						String cpackage = custom.getPackageName().replace("{C}", entityName).replace("{c}", loCase);
+						String name = custom.getClassName().replace("{C}", entityName).replace("{c}", loCase);
+						CreateFileUtil.createFile(content, custom.getTemplateValue(), projectPath, cpackage, name + Constant.JAVA_SUFFIX, codeFormat,
+								config.isOverrideFile());
 					} catch (Exception e) {
 						LOG.error("执行生成自定义生成包类-->失败:", e);
 					}
@@ -1172,11 +1174,14 @@ public class IndexController extends BaseController {
 						for (TableAttributeKeyValueTemplate custom : config.getTableItem()) {
 							if (!StrUtil.isNullOrEmpty(custom.getTemplateValue())) {
 								try {
-									updateMessage(runCreateTipsText + " {t} ...".replace("{t}", custom.getClassName() + ""));
-									CreateFileUtil.createFile(content, custom.getTemplateValue(), projectPath, custom.getPackageName(),
-											custom.getClassName() + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
+									String loCase = StrUtil.fristToLoCase(txtEntityName.getText());
+									String cpackage = custom.getPackageName().replace("{C}", txtEntityName.getText()).replace("{c}", loCase);
+									String name = custom.getClassName().replace("{C}", txtEntityName.getText()).replace("{c}", loCase);
+									updateMessage(runCreateTipsText + " {t} ...".replace("{t}", custom.getKey() + ""));
+									CreateFileUtil.createFile(content, custom.getTemplateValue(), projectPath, cpackage, name + Constant.JAVA_SUFFIX,
+											codeFormat, config.isOverrideFile());
 								} catch (Exception e) {
-									updateMessage("执行生成自定义生成包类:" + custom.getClassName() + "失败:" + e);
+									updateMessage("执行生成自定义生成包类:" + custom.getKey() + "失败:" + e);
 									LOG.error("执行生成自定义生成包类-->失败:", e);
 								}
 							}

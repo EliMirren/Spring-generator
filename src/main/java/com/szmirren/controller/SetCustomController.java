@@ -187,13 +187,11 @@ public class SetCustomController extends BaseController {
 		tdPackageName.setCellValueFactory(new PropertyValueFactory<>("packageName"));
 		tdPackageName.setCellFactory(cellFactory);
 		tdPackageName.setOnEditCommit((CellEditEvent<TableAttributeKeyValueTemplate, String> t) -> {
-			System.out.println(t.getNewValue());
 			((TableAttributeKeyValueTemplate) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPackageName(t.getNewValue());
 		});
 		tdClassName.setCellValueFactory(new PropertyValueFactory<>("className"));
 		tdClassName.setCellFactory(cellFactory);
 		tdClassName.setOnEditCommit((CellEditEvent<TableAttributeKeyValueTemplate, String> t) -> {
-			System.out.println(t.getNewValue());
 			((TableAttributeKeyValueTemplate) t.getTableView().getItems().get(t.getTablePosition().getRow())).setClassName(t.getNewValue());
 		});
 		tdTemplate.setCellValueFactory(new PropertyValueFactory<>("template"));
