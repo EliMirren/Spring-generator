@@ -103,6 +103,7 @@ public class ConverterUtil {
 					content.setPrimaryKeyJdbcType(c.getTdJdbcType());
 					content.setPrimaryKeyJavaType(c.getTdJavaType().getValue());
 					content.setPrimaryKeyAttr(attr);
+					continue;
 				}
 				// 添加不能为空的属性属性列与其他属性
 				if (!attr.isNullable() && StrUtil.isNullOrEmpty(attr.getColumnDef())) {
