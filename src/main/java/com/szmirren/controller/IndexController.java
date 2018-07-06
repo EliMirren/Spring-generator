@@ -796,7 +796,9 @@ public class IndexController extends BaseController {
 
 		String className = tableName != null ? entityNamePlace.replace("{c}", StrUtil.unlineToPascal(tableName)) : txtEntityName.getText();
 		String entityName = tableName != null ? entityNamePlace.replace("{c}", StrUtil.unlineToPascal(tableName)) : txtEntityName.getText();
-
+		if (tableName == null) {
+			tableName = selectedTableName;
+		}
 		EntityContent entityContent = new EntityContent(txtEntityPackage.getText(), entityName, tableName);
 		ConverterUtil.entityConfigToContent(ec, entityContent);
 		content.setEntity(entityContent);
@@ -901,8 +903,8 @@ public class IndexController extends BaseController {
 	 * @throws Exception
 	 */
 	public void createAllRun(DatabaseConfig databaseConfig, String tableName) throws Exception {
-		GeneratorContent content = getGeneratorContent(databaseConfig, tableName);
 		HistoryConfig historyConfig = getThisHistoryConfigAndInit(databaseConfig, tableName);
+		GeneratorContent content = getGeneratorContent(databaseConfig, tableName);
 		// 项目生成的路径
 		String projectPath = txtProjectPath.getText();
 		String codeFormat = cboCodeFormat.getValue();
@@ -1051,8 +1053,8 @@ public class IndexController extends BaseController {
 					// 项目生成的路径
 					String projectPath = txtProjectPath.getText();
 					String codeFormat = cboCodeFormat.getValue();
-					GeneratorContent content = getGeneratorContent(selectedDatabaseConfig, txtTableName.getText());
 					HistoryConfig historyConfig = getThisHistoryConfigAndInit(selectedDatabaseConfig, txtTableName.getText());
+					GeneratorContent content = getGeneratorContent(selectedDatabaseConfig, null);
 					// 生成实体类
 					try {
 						EntityConfig config = historyConfig.getEntityConfig();
