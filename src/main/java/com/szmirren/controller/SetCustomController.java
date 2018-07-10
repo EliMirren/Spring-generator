@@ -69,12 +69,15 @@ public class SetCustomController extends BaseController {
 	/** 属性表的key列 */
 	@FXML
 	private TableColumn<TableAttributeKeyValueTemplate, String> tdKey;
-	/** 属性表的value列 */
+	/** 属性表的包名列 */
 	@FXML
 	private TableColumn<TableAttributeKeyValueTemplate, String> tdPackageName;
-	/** 属性表的value列 */
+	/** 属性表的类名列 */
 	@FXML
 	private TableColumn<TableAttributeKeyValueTemplate, String> tdClassName;
+	/** 属性表的后缀列 */
+	@FXML
+	private TableColumn<TableAttributeKeyValueTemplate, String> tdSuffix;
 	@FXML
 	private TableColumn<TableAttributeKeyValueTemplate, ComboBox<String>> tdTemplate;
 	/** 自定义key输入框 */
@@ -118,10 +121,11 @@ public class SetCustomController extends BaseController {
 		// 设置列的大小自适应
 		tblProperty.setColumnResizePolicy(resize -> {
 			double width = resize.getTable().getWidth();
-			tdKey.setPrefWidth(width / 4);
-			tdPackageName.setPrefWidth(width / 4);
-			tdClassName.setPrefWidth(width / 4);
-			tdTemplate.setPrefWidth(width / 4);
+			tdKey.setPrefWidth(width * 0.22);
+			tdPackageName.setPrefWidth(width * 0.22);
+			tdClassName.setPrefWidth(width * 0.22);
+			tdSuffix.setPrefWidth(width * 0.12);
+			tdTemplate.setPrefWidth(width * 0.22);
 			return true;
 		});
 		btnConfirm.widthProperty().addListener(w -> {
@@ -187,14 +191,17 @@ public class SetCustomController extends BaseController {
 		tdPackageName.setCellValueFactory(new PropertyValueFactory<>("packageName"));
 		tdPackageName.setCellFactory(cellFactory);
 		tdPackageName.setOnEditCommit((CellEditEvent<TableAttributeKeyValueTemplate, String> t) -> {
-			System.out.println(t.getNewValue());
 			((TableAttributeKeyValueTemplate) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPackageName(t.getNewValue());
 		});
 		tdClassName.setCellValueFactory(new PropertyValueFactory<>("className"));
 		tdClassName.setCellFactory(cellFactory);
 		tdClassName.setOnEditCommit((CellEditEvent<TableAttributeKeyValueTemplate, String> t) -> {
-			System.out.println(t.getNewValue());
 			((TableAttributeKeyValueTemplate) t.getTableView().getItems().get(t.getTablePosition().getRow())).setClassName(t.getNewValue());
+		});
+		tdSuffix.setCellValueFactory(new PropertyValueFactory<>("suffix"));
+		tdSuffix.setCellFactory(cellFactory);
+		tdSuffix.setOnEditCommit((CellEditEvent<TableAttributeKeyValueTemplate, String> t) -> {
+			((TableAttributeKeyValueTemplate) t.getTableView().getItems().get(t.getTablePosition().getRow())).setSuffix(t.getNewValue());
 		});
 		tdTemplate.setCellValueFactory(new PropertyValueFactory<>("template"));
 		tblProperty.setItems(tblPropertyValues);
@@ -224,6 +231,7 @@ public class SetCustomController extends BaseController {
 	private void initLanguage() {
 		lblTips.textProperty().bind(Main.LANGUAGE.get(LanguageKey.SET_LBL_TIPS));
 		tdClassName.textProperty().bind(Main.LANGUAGE.get(LanguageKey.SET_COMMON_CLASS_NAME));
+		tdSuffix.textProperty().bind(Main.LANGUAGE.get(LanguageKey.SET_COMMON_SUFFIX));
 		tdPackageName.textProperty().bind(Main.LANGUAGE.get(LanguageKey.SET_COMMON_PACKAGE_NAME));
 		tdTemplate.textProperty().bind(Main.LANGUAGE.get(LanguageKey.SET_COMMON_TEMPLATE_NAME));
 		lblAddCustomProperty.textProperty().bind(Main.LANGUAGE.get(LanguageKey.SET_LBL_ADD_CUSTOM_PROPERTY));
@@ -293,7 +301,7 @@ public class SetCustomController extends BaseController {
 		if (config != null && config.getTableItem() != null) {
 			config.getTableItem().forEach(v -> {
 				TableAttributeKeyValueTemplate attribute = new TableAttributeKeyValueTemplate(v.getKey(), v.getPackageName(), v.getClassName(),
-						v.getTemplateValue());
+						v.getSuffix(), v.getTemplateValue());
 				attribute.getTemplate().promptTextProperty().bind(Main.LANGUAGE.get(LanguageKey.SET_CBO_TEMPLATE));
 				attribute.getTemplate().prefWidthProperty().bind(tdTemplate.widthProperty());
 				attribute.getTemplate().setEditable(true);
@@ -341,7 +349,7 @@ public class SetCustomController extends BaseController {
 		comboBox.setEditable(true);
 		comboBox.getItems().addAll(indexController.getTemplateNameItems());
 		TableAttributeKeyValueTemplate attribute = new TableAttributeKeyValueTemplate(txtKey.getText(), txtPackageName.getText(),
-				txtClassName.getText(), comboBox);
+				txtClassName.getText(), Constant.JAVA_SUFFIX, comboBox);
 		tblPropertyValues.add(attribute);
 		LOG.debug("添加自定义属性-->成功!");
 	}

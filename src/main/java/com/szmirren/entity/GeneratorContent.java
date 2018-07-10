@@ -12,6 +12,8 @@ public class GeneratorContent {
 	private DatabaseContent database;
 	/** 实体类配置信息 */
 	private EntityContent entity;
+	/** 数据库表的属性 */
+	private TableContent table;
 	/** 实体类配置信息 */
 	private ServiceContent service;
 	/** 实体类配置信息 */
@@ -30,6 +32,14 @@ public class GeneratorContent {
 	private CustomContent custom;
 	/** 实体类配置信息 */
 	private CustomPropertyContent customProperty;
+
+	public TableContent getTable() {
+		return table;
+	}
+
+	public void setTable(TableContent table) {
+		this.table = table;
+	}
 
 	public EntityContent getEntity() {
 		return entity;

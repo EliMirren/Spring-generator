@@ -246,7 +246,9 @@ public interface LanguageKey {
 	/** 设置-通用包名 */
 	static final String SET_COMMON_PACKAGE_NAME = "set.commonPackageName";
 	/** 设置-通用类名 */
-	static final String SET_COMMON_CLASS_NAME = "set.commonPackageName";
+	static final String SET_COMMON_CLASS_NAME = "set.commonClassName";
+	/** 设置-通用后缀名 */
+	static final String SET_COMMON_SUFFIX = "set.commonSuffix";
 	/** 设置-通用模板名 */
 	static final String SET_COMMON_TEMPLATE_NAME = "set.commonTemplateName";
 	/** 设置-文本属性包名 */

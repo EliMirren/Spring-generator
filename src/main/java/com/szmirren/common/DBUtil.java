@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.szmirren.entity.TableContent;
 import com.szmirren.models.DBType;
 import com.szmirren.models.TableAttributeEntity;
 import com.szmirren.options.DatabaseConfig;
@@ -99,8 +100,42 @@ public class DBUtil {
 				tables.add(rs.getString(3));
 			}
 		}
-
 		return tables;
+	}
+
+	/**
+	 * 获得指定表的属性
+	 * 
+	 * @param config
+	 * @param tableName
+	 * @return
+	 * @throws Exception
+	 */
+	public static TableContent getTableAttribute(DatabaseConfig config, String tableName) throws Exception {
+		Connection conn = getConnection(config);
+		TableContent content = new TableContent();
+		ResultSet rs;
+		DatabaseMetaData md = conn.getMetaData();
+		String[] types = {"TABLE", "VIEW"};
+		if (config.getDbType().equalsIgnoreCase(Constant.POSTGRE_SQL)) {
+			rs = md.getTables(null, null, tableName, types);
+		} else {
+			String catalog = conn.getCatalog() == null ? null : conn.getCatalog();
+			rs = md.getTables(catalog, config.getUserName().toUpperCase(), tableName, types);
+		}
+		if (rs.next()) {
+			content.setTableCat(rs.getString("TABLE_CAT"));
+			content.setTableSchem(rs.getString("TABLE_SCHEM"));
+			content.setTableName(rs.getString("TABLE_NAME"));
+			content.setTableType(rs.getString("TABLE_TYPE"));
+			content.setRemarks(rs.getString("REMARKS"));
+			content.setTypeCat(rs.getString("TYPE_CAT"));
+			content.setTypeSchem(rs.getString("TYPE_SCHEM"));
+			content.setTypeName(rs.getString("TYPE_NAME"));
+			content.setSelfReferencingColName(rs.getString("SELF_REFERENCING_COL_NAME"));
+			content.setRefGeneration(rs.getString("REF_GENERATION"));
+		}
+		return content;
 	}
 
 	/**
@@ -116,7 +151,14 @@ public class DBUtil {
 	public static List<TableAttributeEntity> getTableColumns(DatabaseConfig config, String tableName) throws Exception {
 		Connection conn = getConnection(config);
 		DatabaseMetaData md = conn.getMetaData();
-		ResultSet rs = md.getColumns(conn.getCatalog(), "%%", tableName, "%%");
+
+		ResultSet rs = null;
+		if (config.getDbType().equalsIgnoreCase(Constant.MYSQL)) {
+			rs = md.getColumns(conn.getCatalog(), "%%", tableName, "%%");
+		} else {
+			rs = md.getColumns(null, null, tableName, null);
+		}
+
 		Map<String, TableAttributeEntity> columnMap = new HashMap<>();
 		while (rs.next()) {
 			TableAttributeEntity attr = new TableAttributeEntity();
@@ -151,7 +193,12 @@ public class DBUtil {
 	public static String getTablePrimaryKey(DatabaseConfig config, String tableName) throws Exception {
 		Connection conn = getConnection(config);
 		DatabaseMetaData md = conn.getMetaData();
-		ResultSet rs = md.getPrimaryKeys(conn.getCatalog(), conn.getSchema(), tableName);
+		ResultSet rs = null;
+		if (config.getDbType().equalsIgnoreCase(Constant.MYSQL)) {
+			rs = md.getPrimaryKeys(conn.getCatalog(), conn.getSchema(), tableName);
+		} else {
+			rs = md.getPrimaryKeys(null, null, tableName);
+		}
 		while (rs.next()) {
 			return rs.getString("COLUMN_NAME");
 		}

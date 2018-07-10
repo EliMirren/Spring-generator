@@ -19,6 +19,8 @@ public class TableAttributeKeyValueTemplate {
 	private StringProperty packageName = new SimpleStringProperty();
 	/** 类名 */
 	private StringProperty className = new SimpleStringProperty();
+	/** 后缀名 */
+	private StringProperty suffix = new SimpleStringProperty(".java");
 	/** 模板 */
 	private ComboBox<String> template;
 	/** 模板的值 */
@@ -37,17 +39,20 @@ public class TableAttributeKeyValueTemplate {
 	 * @param key
 	 *          key列的值
 	 * @param packageName
-	 *          packageName列的值
+	 *          包名
 	 * @param className
-	 *          当前列的描述
+	 *          类名
+	 * @param suffix
+	 *          后缀名
 	 * @param templateValue
 	 *          模板的值
 	 */
-	public TableAttributeKeyValueTemplate(String key, String packageName, String className, String templateValue) {
+	public TableAttributeKeyValueTemplate(String key, String packageName, String className, String suffix, String templateValue) {
 		super();
 		this.key.setValue(key);
 		this.packageName.setValue(packageName);
 		this.className.setValue(className);
+		this.suffix.setValue(suffix);
 		this.template = new ComboBox<>();
 		this.template.setValue(templateValue);
 		this.templateValue = templateValue;
@@ -61,6 +66,7 @@ public class TableAttributeKeyValueTemplate {
 		setKey(object.getString("key"));
 		setPackageName(object.getString("packageName"));
 		setClassName(object.getString("className"));
+		setSuffix(object.getString("suffix"));
 		setTemplateValue(object.getString("templateValue"));
 	}
 
@@ -84,6 +90,7 @@ public class TableAttributeKeyValueTemplate {
 		result.put("key", key.getValue());
 		result.put("packageName", packageName.getValue());
 		result.put("className", className.getValue());
+		result.put("suffix", suffix.getValue());
 		result.put("templateValue", getTemplateValue());
 		return result;
 	}
@@ -100,11 +107,12 @@ public class TableAttributeKeyValueTemplate {
 	 * @param template
 	 *          模板的ComboBox
 	 */
-	public TableAttributeKeyValueTemplate(String key, String packageName, String className, ComboBox<String> template) {
+	public TableAttributeKeyValueTemplate(String key, String packageName, String className, String suffix, ComboBox<String> template) {
 		super();
 		this.key.setValue(key);
 		this.packageName.setValue(packageName);
 		this.className.setValue(className);
+		this.suffix.setValue(suffix);
 		this.template = template;
 	}
 
@@ -166,6 +174,17 @@ public class TableAttributeKeyValueTemplate {
 		return template;
 	}
 
+	public String getSuffix() {
+		return suffix.getValue();
+	}
+
+	public void setSuffix(String suffix) {
+		this.suffix.setValue(suffix);
+	}
+	public void setSuffix(StringProperty suffix) {
+		this.suffix = suffix;
+	}
+
 	public void setTemplate(String template) {
 		this.template.setValue(template);
 	}
@@ -176,7 +195,8 @@ public class TableAttributeKeyValueTemplate {
 
 	@Override
 	public String toString() {
-		return "TableAttributeKeyValueTemplate [key=" + key + ", packageName=" + packageName + ", className=" + className + ", template=" + template + "]";
+		return "TableAttributeKeyValueTemplate [key=" + key + ", packageName=" + packageName + ", className=" + className + ", suffix=" + suffix
+				+ ", template=" + template + ", templateValue=" + templateValue + "]";
 	}
 
 }

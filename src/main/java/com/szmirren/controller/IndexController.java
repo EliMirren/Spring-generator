@@ -32,6 +32,7 @@ import com.szmirren.entity.MapperContent;
 import com.szmirren.entity.ServiceContent;
 import com.szmirren.entity.ServiceImplContent;
 import com.szmirren.entity.SqlAssistContent;
+import com.szmirren.entity.TableContent;
 import com.szmirren.entity.UnitTestContent;
 import com.szmirren.models.TableAttributeEntity;
 import com.szmirren.models.TableAttributeKeyValueTemplate;
@@ -772,6 +773,8 @@ public class IndexController extends BaseController {
 	/**
 	 * 获得模板需要的上下文
 	 * 
+	 * @param databaseConfig
+	 *          数据库配置文件
 	 * @param tableName
 	 *          表的名字,如果表名不为空,将类名设置为默认值占位表名,如果直接使用版面数据输入null
 	 * @return
@@ -784,12 +787,18 @@ public class IndexController extends BaseController {
 		DatabaseContent databaseContent = new DatabaseContent();
 		ConverterUtil.databaseConfigToContent(databaseConfig, databaseContent);
 		content.setDatabase(databaseContent);
+
+		// 数据库表属性
+		TableContent tableContent = DBUtil.getTableAttribute(databaseConfig, tableName);
+		content.setTable(tableContent);
 		// 实体类属性
 		EntityConfig ec = getThisHistoryConfigAndInit(databaseConfig, tableName != null ? tableName : selectedTableName).getEntityConfig();
 
 		String className = tableName != null ? entityNamePlace.replace("{c}", StrUtil.unlineToPascal(tableName)) : txtEntityName.getText();
 		String entityName = tableName != null ? entityNamePlace.replace("{c}", StrUtil.unlineToPascal(tableName)) : txtEntityName.getText();
-
+		if (tableName == null) {
+			tableName = selectedTableName;
+		}
 		EntityContent entityContent = new EntityContent(txtEntityPackage.getText(), entityName, tableName);
 		ConverterUtil.entityConfigToContent(ec, entityContent);
 		content.setEntity(entityContent);
@@ -894,8 +903,8 @@ public class IndexController extends BaseController {
 	 * @throws Exception
 	 */
 	public void createAllRun(DatabaseConfig databaseConfig, String tableName) throws Exception {
-		GeneratorContent content = getGeneratorContent(databaseConfig, tableName);
 		HistoryConfig historyConfig = getThisHistoryConfigAndInit(databaseConfig, tableName);
+		GeneratorContent content = getGeneratorContent(databaseConfig, tableName);
 		// 项目生成的路径
 		String projectPath = txtProjectPath.getText();
 		String codeFormat = cboCodeFormat.getValue();
@@ -1001,8 +1010,11 @@ public class IndexController extends BaseController {
 			for (TableAttributeKeyValueTemplate custom : config.getTableItem()) {
 				if (!StrUtil.isNullOrEmpty(custom.getTemplateValue())) {
 					try {
-						CreateFileUtil.createFile(content, custom.getTemplateValue(), projectPath, custom.getPackageName(),
-								custom.getClassName() + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
+						String loCase = StrUtil.fristToLoCase(entityName);
+						String cpackage = custom.getPackageName().replace("{C}", entityName).replace("{c}", loCase);
+						String name = custom.getClassName().replace("{C}", entityName).replace("{c}", loCase);
+						CreateFileUtil.createFile(content, custom.getTemplateValue(), projectPath, cpackage, name + custom.getSuffix(), codeFormat,
+								config.isOverrideFile());
 					} catch (Exception e) {
 						LOG.error("执行生成自定义生成包类-->失败:", e);
 					}
@@ -1041,8 +1053,8 @@ public class IndexController extends BaseController {
 					// 项目生成的路径
 					String projectPath = txtProjectPath.getText();
 					String codeFormat = cboCodeFormat.getValue();
-					GeneratorContent content = getGeneratorContent(selectedDatabaseConfig, txtTableName.getText());
 					HistoryConfig historyConfig = getThisHistoryConfigAndInit(selectedDatabaseConfig, txtTableName.getText());
+					GeneratorContent content = getGeneratorContent(selectedDatabaseConfig, null);
 					// 生成实体类
 					try {
 						EntityConfig config = historyConfig.getEntityConfig();
@@ -1164,11 +1176,14 @@ public class IndexController extends BaseController {
 						for (TableAttributeKeyValueTemplate custom : config.getTableItem()) {
 							if (!StrUtil.isNullOrEmpty(custom.getTemplateValue())) {
 								try {
-									updateMessage(runCreateTipsText + " {t} ...".replace("{t}", custom.getClassName() + ""));
-									CreateFileUtil.createFile(content, custom.getTemplateValue(), projectPath, custom.getPackageName(),
-											custom.getClassName() + Constant.JAVA_SUFFIX, codeFormat, config.isOverrideFile());
+									String loCase = StrUtil.fristToLoCase(txtEntityName.getText());
+									String cpackage = custom.getPackageName().replace("{C}", txtEntityName.getText()).replace("{c}", loCase);
+									String name = custom.getClassName().replace("{C}", txtEntityName.getText()).replace("{c}", loCase);
+									updateMessage(runCreateTipsText + " {t} ...".replace("{t}", custom.getKey() + ""));
+									CreateFileUtil.createFile(content, custom.getTemplateValue(), projectPath, cpackage, name + custom.getSuffix(),
+											codeFormat, config.isOverrideFile());
 								} catch (Exception e) {
-									updateMessage("执行生成自定义生成包类:" + custom.getClassName() + "失败:" + e);
+									updateMessage("执行生成自定义生成包类:" + custom.getKey() + "失败:" + e);
 									LOG.error("执行生成自定义生成包类-->失败:", e);
 								}
 							}
