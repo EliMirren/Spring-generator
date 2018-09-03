@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.szmirren.entity.TableContent;
 import com.szmirren.models.DBType;
 import com.szmirren.models.TableAttributeEntity;
@@ -23,6 +25,7 @@ import com.szmirren.options.DatabaseConfig;
  *
  */
 public class DBUtil {
+	private static Logger LOG = Logger.getLogger(DBUtil.class);
 	private static final int DB_CONNECTION_TIMEOUTS_SECONDS = 1;
 
 	/**
@@ -124,16 +127,20 @@ public class DBUtil {
 			rs = md.getTables(catalog, config.getUserName().toUpperCase(), tableName, types);
 		}
 		if (rs.next()) {
-			content.setTableCat(rs.getString("TABLE_CAT"));
-			content.setTableSchem(rs.getString("TABLE_SCHEM"));
-			content.setTableName(rs.getString("TABLE_NAME"));
-			content.setTableType(rs.getString("TABLE_TYPE"));
-			content.setRemarks(rs.getString("REMARKS"));
-			content.setTypeCat(rs.getString("TYPE_CAT"));
-			content.setTypeSchem(rs.getString("TYPE_SCHEM"));
-			content.setTypeName(rs.getString("TYPE_NAME"));
-			content.setSelfReferencingColName(rs.getString("SELF_REFERENCING_COL_NAME"));
-			content.setRefGeneration(rs.getString("REF_GENERATION"));
+			try {
+				content.setTableCat(rs.getString("TABLE_CAT"));
+				content.setTableSchem(rs.getString("TABLE_SCHEM"));
+				content.setTableName(rs.getString("TABLE_NAME"));
+				content.setTableType(rs.getString("TABLE_TYPE"));
+				content.setRemarks(rs.getString("REMARKS"));
+				content.setTypeCat(rs.getString("TYPE_CAT"));
+				content.setTypeSchem(rs.getString("TYPE_SCHEM"));
+				content.setTypeName(rs.getString("TYPE_NAME"));
+				content.setSelfReferencingColName(rs.getString("SELF_REFERENCING_COL_NAME"));
+				content.setRefGeneration(rs.getString("REF_GENERATION"));
+			} catch (Exception e) {
+				LOG.error("获取部分表属性失败:", e);
+			}
 		}
 		return content;
 	}
@@ -161,18 +168,22 @@ public class DBUtil {
 
 		Map<String, TableAttributeEntity> columnMap = new HashMap<>();
 		while (rs.next()) {
-			TableAttributeEntity attr = new TableAttributeEntity();
-			attr.setTdColumnName(rs.getString("COLUMN_NAME"));
-			attr.setTdJdbcType(rs.getString("TYPE_NAME"));
-			attr.setTdJavaType(JavaType.jdbcTypeToJavaType(rs.getString("TYPE_NAME")));
+			try {
+				TableAttributeEntity attr = new TableAttributeEntity();
+				attr.setTdColumnName(rs.getString("COLUMN_NAME"));
+				attr.setTdJdbcType(rs.getString("TYPE_NAME"));
+				attr.setTdJavaType(JavaType.jdbcTypeToJavaType(rs.getString("TYPE_NAME")));
 
-			attr.setColumnDef(rs.getString("COLUMN_DEF"));
-			attr.setRemarks(rs.getString("REMARKS"));
-			attr.setColumnSize(rs.getInt("COLUMN_SIZE"));
-			attr.setDecimalDigits(rs.getInt("DECIMAL_DIGITS"));
-			attr.setOrdinalPosition(rs.getInt("ORDINAL_POSITION"));
-			attr.setNullable(rs.getInt("NULLABLE") == 1 ? true : false);
-			columnMap.put(rs.getString("COLUMN_NAME"), attr);
+				attr.setColumnDef(rs.getString("COLUMN_DEF"));
+				attr.setRemarks(rs.getString("REMARKS"));
+				attr.setColumnSize(rs.getInt("COLUMN_SIZE"));
+				attr.setDecimalDigits(rs.getInt("DECIMAL_DIGITS"));
+				attr.setOrdinalPosition(rs.getInt("ORDINAL_POSITION"));
+				attr.setNullable(rs.getInt("NULLABLE") == 1 ? true : false);
+				columnMap.put(rs.getString("COLUMN_NAME"), attr);
+			} catch (Exception e) {
+				LOG.error("获取部分表属性失败:", e);
+			}
 		}
 		if (columnMap.size() == 0) {
 			throw new NullPointerException("从表中获取字段失败!获取不到任何字段!");
