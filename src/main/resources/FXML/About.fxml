@@ -8,7 +8,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="348.0" prefWidth="723.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.szmirren.controller.AboutController">
 	<children>
-		<Label layoutX="276.0" layoutY="28.0" text=" :  Spring-generator-1.0.0">
+		<Label layoutX="276.0" layoutY="28.0" text=" :  Spring-generator-1.0.5">
 			<font>
 				<Font size="20.0" />
 			</font>

@@ -46,7 +46,7 @@ public class Main extends Application {
 		FXMLLoader fxmlLoader = new FXMLLoader(url);
 		Parent root = fxmlLoader.load();
 		primaryStage.setResizable(true);
-		primaryStage.setTitle("Srping-Generator");
+		primaryStage.setTitle("Srping-generator_1.0.5");
 		primaryStage.getIcons().add(new Image("image/icon.png"));
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();

@@ -219,7 +219,7 @@ public class SetCustomPropertyController extends BaseController {
 			LOG.error("执行从数据库中获取配置文件-->失败:", e);
 			AlertUtil.showErrorAlert("执行获得配置文件-->失败:" + e);
 		}
-		return new CustomPropertyConfig();
+		return new CustomPropertyConfig().initDefaultValue();
 	}
 
 	/**
