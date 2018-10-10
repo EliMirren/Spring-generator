@@ -25,6 +25,21 @@
 						${r'#{value}'}
 					</foreach>
 				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${r'${cr.require}'}
+						<if test="cr.value != null">
+							${r'#{cr.value}'}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								${r'#{value}'}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${r'${cr.suffix}'}</if>
+					</foreach>
+				</if>
 				<if test="req.suffix != null"> ${r'${req.suffix}'}</if>
 			</foreach>
 		</where>
@@ -41,6 +56,21 @@
 				<if test="req.values != null">
 					<foreach collection="req.values" item="value" separator=",">
 						${r'#{value}'}
+					</foreach>
+				</if>
+				<if test="req.customRequire !=null">
+					<foreach collection="req.customRequire" item="cr" separator=" ">
+						${r'${cr.require}'}
+						<if test="cr.value != null">
+							${r'#{cr.value}'}
+						</if>
+						<if test="cr.values != null">
+							<foreach collection="cr.values" item="value"
+								separator=",">
+								${r'#{value}'}
+							</foreach>
+						</if>
+						<if test="cr.suffix != null"> ${r'${cr.suffix}'}</if>
 					</foreach>
 				</if>
 				<if test="req.suffix != null"> ${r'${req.suffix}'}</if>

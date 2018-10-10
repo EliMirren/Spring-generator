@@ -42,6 +42,8 @@ public class Assist {
 		private Object[] values;
 		/** 查询语句的后缀 */
 		private String suffix;
+		/** 自定义查询条件 */
+		private WhereRequire<T>[] customRequire;
 
 		public WhereRequire(String require, T value) {
 			super();
@@ -95,9 +97,18 @@ public class Assist {
 			this.suffix = suffix;
 		}
 
+		public WhereRequire<T>[] getCustomRequire() {
+			return customRequire;
+		}
+
+		public void setCustomRequire(WhereRequire<T>[] customRequire) {
+			this.customRequire = customRequire;
+		}
+
 		@Override
 		public String toString() {
-			return "WhereRequire [require=" + require + ", value=" + value + ", values=" + Arrays.toString(values) + ", suffix=" + suffix + "]";
+			return "WhereRequire [require=" + require + ", value=" + value + ", values=" + Arrays.toString(values) + ", suffix=" + suffix
+					+ ", customRequire=" + Arrays.toString(customRequire) + "]";
 		}
 
 	}
@@ -455,6 +466,66 @@ public class Assist {
 		return this;
 	}
 
+	/**
+	 * 添加括号条件(xx=xx or xx=xx)<br>
+	 * 第一个参数列名不需要加上逻辑运算符,第二个开始需要加上逻辑运算符号,如果List可以调用list.toArray()<br>
+	 * 简单调用示例: <br>
+	 * assist.orParenthesis(<br>
+	 * --Assist.whereRequire("列名 = ", 条件值),<br>
+	 * --Assist.whereRequire("or 列名 = ", 条件值)<br>
+	 * );<br>
+	 * 结果:select * from xxx where x=x or (列名 = 值 or 列名 = 值)<br>
+	 * <br>
+	 * 嵌套调用示例: <br>
+	 * assist.orParenthesis(<br>
+	 * --Assist.whereRequire("列名 >= ", 条件值),<br>
+	 * --Assist.whereRequire("or (列名 = ", 条件值),<br>
+	 * --Assist.whereRequire("and 列名 = ", 条件值,")")<br>
+	 * );<br>
+	 * 结果:select * from xxx where x=x or (列名 >= 值 or (列名 = 值 and 列名 = 值))<br>
+	 * 
+	 * @param customRequire
+	 *          使用Assist的静态方法Assist.whereRequire获取值
+	 * @return
+	 */
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public <T> Assist orParenthesis(WhereRequire... customRequire) {
+		WhereRequire<T> cr = new Assist().new WhereRequire<>("or (", " ) ");
+		cr.setCustomRequire(customRequire);
+		setRequires(cr);
+		return this;
+	}
+	
+	/**
+	 * 添加括号条件(xx=xx or xx=xx)<br>
+	 * 第一个参数列名不需要加上逻辑运算符,第二个开始需要加上逻辑运算符号,如果List可以调用list.toArray()<br>
+	 * 简单调用示例: <br>
+	 * assist.andParenthesis(<br>
+	 * --Assist.whereRequire("列名 = ", 条件值),<br>
+	 * --Assist.whereRequire("or 列名 = ", 条件值)<br>
+	 * );<br>
+	 * 结果:select * from xxx where x=x and (列名 = 值 or 列名 = 值)<br>
+	 * <br>
+	 * 嵌套调用示例: <br>
+	 * assist.andParenthesis(<br>
+	 * --Assist.whereRequire("列名 >= ", 条件值),<br>
+	 * --Assist.whereRequire("or (列名 = ", 条件值),<br>
+	 * --Assist.whereRequire("and 列名 = ", 条件值,")")<br>
+	 * );<br>
+	 * 结果:select * from xxx where x=x and (列名 >= 值 or (列名 = 值 and 列名 = 值))<br>
+	 * 
+	 * @param customRequire
+	 *          使用Assist的静态方法Assist.whereRequire获取值
+	 * @return
+	 */
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public <T> Assist andParenthesis(WhereRequire... customRequire) {
+		WhereRequire<T> cr = new Assist().new WhereRequire<>("and (", " ) ");
+		cr.setCustomRequire(customRequire);
+		setRequires(cr);
+		return this;
+	}
+	
 	/**
 	 * 自定义查询条件 :<br>
 	 * 参数1=自定义开头语句<br>
