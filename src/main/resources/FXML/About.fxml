@@ -8,7 +8,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="348.0" prefWidth="723.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.szmirren.controller.AboutController">
 	<children>
-		<Label layoutX="276.0" layoutY="28.0" text=" :  Spring-generator-1.0.5">
+		<Label fx:id="lblNameVersion" layoutX="293.0" layoutY="28.0" text="Spring-generator_1">
 			<font>
 				<Font size="20.0" />
 			</font>
@@ -53,7 +53,7 @@
 				<Font size="14.0" />
 			</font>
 		</TextField>
-      <Label fx:id="lblVersion" layoutX="190.0" layoutY="28.0" text="当前版本">
+      <Label fx:id="lblVersion" layoutX="190.0" layoutY="28.0" text="当前版本 :  ">
          <font>
             <Font size="20.0" />
          </font>

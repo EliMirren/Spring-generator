@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import com.szmirren.Main;
 import com.szmirren.common.LanguageKey;
+import com.szmirren.common.SpringGenerator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -20,6 +21,9 @@ public class AboutController extends BaseController {
 	/** 当前版本 */
 	@FXML
 	private Label lblVersion;
+	/** 当前版本 */
+	@FXML
+	private Label lblNameVersion;
 	/** 使用说明 */
 	@FXML
 	private Label lblInstructions;
@@ -53,6 +57,8 @@ public class AboutController extends BaseController {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		lblNameVersion.setText(SpringGenerator.NAME_VERSION);
+		
 		final int ml = 10;// 左外边距
 		lblVersion.textProperty().bind(Main.LANGUAGE.get(LanguageKey.INSTRUCTION_LBL_Version));
 		lblInstructions.textProperty().bind(Main.LANGUAGE.get(LanguageKey.INSTRUCTION_LBL_INSTRUCTIONS));
