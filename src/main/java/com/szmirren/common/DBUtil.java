@@ -128,16 +128,20 @@ public class DBUtil {
 		}
 		if (rs.next()) {
 			try {
-				content.setTableCat(rs.getString("TABLE_CAT"));
-				content.setTableSchem(rs.getString("TABLE_SCHEM"));
 				content.setTableName(rs.getString("TABLE_NAME"));
 				content.setTableType(rs.getString("TABLE_TYPE"));
 				content.setRemarks(rs.getString("REMARKS"));
-				content.setTypeCat(rs.getString("TYPE_CAT"));
-				content.setTypeSchem(rs.getString("TYPE_SCHEM"));
-				content.setTypeName(rs.getString("TYPE_NAME"));
-				content.setSelfReferencingColName(rs.getString("SELF_REFERENCING_COL_NAME"));
-				content.setRefGeneration(rs.getString("REF_GENERATION"));
+				try {
+					content.setTableCat(rs.getString("TABLE_CAT"));
+					content.setTableSchem(rs.getString("TABLE_SCHEM"));
+					content.setTypeCat(rs.getString("TYPE_CAT"));
+					content.setTypeSchem(rs.getString("TYPE_SCHEM"));
+					content.setTypeName(rs.getString("TYPE_NAME"));
+					content.setSelfReferencingColName(rs.getString("SELF_REFERENCING_COL_NAME"));
+					content.setRefGeneration(rs.getString("REF_GENERATION"));
+				} catch (Exception e) {
+					LOG.debug("获取表属性一些可能为null的字段失败", e);
+				}
 			} catch (Exception e) {
 				LOG.error("获取部分表属性失败:", e);
 			}
