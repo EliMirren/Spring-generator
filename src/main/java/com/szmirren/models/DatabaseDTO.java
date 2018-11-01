@@ -36,4 +36,10 @@ public class DatabaseDTO {
 		this.driverClass = driverClass;
 	}
 
+	@Override
+	public String toString() {
+		return "DatabaseDTO [name=" + name + ", value=" + value + ", driverClass=" + driverClass + "]";
+	}
+	
+
 }
