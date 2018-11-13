@@ -197,7 +197,7 @@ public class ConnectionController extends BaseController {
 		String userPwd = txtUserPwd.getText().trim();
 		String dbType = cboDBType.getValue();
 		String encoding = cboDBCoding.getValue();
-		boolean isEmpty = validata(connName, connURL, listenPort, dbName, userName, dbType, encoding);
+		boolean isEmpty = validata(connName, connURL, dbName,dbType, encoding);
 		if (isEmpty) {
 			DatabaseConfig config = new DatabaseConfig(connName, connURL, listenPort, dbName, userName, userPwd, dbType, encoding);
 			return config;

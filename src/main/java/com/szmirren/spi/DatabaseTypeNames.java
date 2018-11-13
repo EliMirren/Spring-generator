@@ -23,6 +23,7 @@ public class DatabaseTypeNames {
 		result.add(Constant.POSTGRE_SQL);
 		result.add(Constant.ORACLE);
 		result.add(Constant.SQL_SERVER);
+		result.add(Constant.SQLITE);
 		return result;
 	}
 }
