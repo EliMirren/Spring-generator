@@ -83,7 +83,7 @@ public class DBUtil {
 		ResultSet rs;
 		if (config.getDbType().equalsIgnoreCase(Constant.SQL_SERVER)) {
 			// 如果是sqlserver数据库通过查询获得所有表跟视图
-			String sql = "select name from sysobjects  where xtype='u' or xtype='v' ";
+			String sql = "select name from sysobjects where UPPER(xtype)='U' or UPPER(xtype)='V'";
 			rs = conn.createStatement().executeQuery(sql);
 			while (rs.next()) {
 				tables.add(rs.getString("name"));
