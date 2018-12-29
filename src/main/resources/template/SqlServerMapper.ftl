@@ -179,7 +179,7 @@
 		insert into ${content.entity.tableName}(<#list content.entity.attrs as item>${item.columnName}<#if item?has_next>,</#if></#list>) values
 		<foreach collection="list" item="item" index="index"
 			separator=",">
-			(<#list content.entity.attrs as item>${r'#{'}${item.field}${r'}'}<#if item?has_next>,</#if></#list>)
+			(<#list content.entity.attrs as item>${r'#{item.'}${item.field}${r'}'}<#if item?has_next>,</#if></#list>)
 		</foreach>
 	</insert>
 	
