@@ -27,6 +27,8 @@ public interface ${content.service.className} {
 	 * @return
 	 */
 	String ${content.service.item.selectById.value!}(${content.entity.primaryKeyAttr.javaType} id);
+	<#else>
+	// TODO 你的表中没有找到主键属性,你可以修改模板使用Assist来作为条件值做一些操作,比如用Assist来做删除与修改
 	</#if>
 	
 	/**

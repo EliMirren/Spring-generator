@@ -348,8 +348,8 @@ public class IndexController extends BaseController {
 			loadTVDataBase();
 			LOG.debug("加载所有数据库到左侧树集成功!");
 		} catch (Exception e1) {
+			LOG.error("加载所有数据库到左侧树集失败!!!" , e1);
 			AlertUtil.showErrorAlert(e1.getMessage());
-			LOG.error("加载所有数据库到左侧树集失败!!!" + e1);
 		}
 		try {
 			// 加载首页配置信息
@@ -359,8 +359,8 @@ public class IndexController extends BaseController {
 			loadTemplate();// 获取模板文件夹中所有模板的名字
 			LOG.debug("加载配置信息到首页成功!");
 		} catch (Exception e) {
+			LOG.error("加载配置信息失败!!!" , e);
 			AlertUtil.showErrorAlert("加载配置失败!失败原因:\r\n" + e.getMessage());
-			LOG.error("加载配置信息失败!!!" + e);
 		}
 	}
 
@@ -616,8 +616,8 @@ public class IndexController extends BaseController {
 								}
 							}
 						} catch (Exception e) {
+							LOG.error("打开连接失败!!!" , e);
 							AlertUtil.showErrorAlert(e.getMessage());
-							LOG.error("打开连接失败!!!" + e);
 						}
 					});
 					MenuItem item1 = new MenuItem("关闭连接");
@@ -651,8 +651,8 @@ public class IndexController extends BaseController {
 							ConfigUtil.deleteDatabaseConfig(selectedConfig.getConnName());
 							this.loadTVDataBase();
 						} catch (Exception e) {
+							LOG.error("删除数据库连接失败!!!" , e);
 							AlertUtil.showErrorAlert("删除数据库连接失败: " + e.getMessage());
-							LOG.error("删除数据库连接失败!!!" + e);
 						}
 					});
 
@@ -703,8 +703,8 @@ public class IndexController extends BaseController {
 							}
 							LOG.debug("加载所有表成功!");
 						} catch (Exception e) {
+							LOG.error("加载所有表失败!!!" , e);
 							AlertUtil.showErrorAlert(e.getMessage());
-							LOG.error("加载所有表失败!!!" + e);
 						}
 					} else if (level == 2) {
 						LOG.debug("将表的数据加载到数据面板...");
@@ -889,8 +889,8 @@ public class IndexController extends BaseController {
 			lblRunCreateAllTips.textProperty().bind(task.messageProperty());
 			new Thread(task).start();
 		} catch (Exception e) {
+			LOG.error("执行创建文件-->失败:" , e);
 			AlertUtil.showErrorAlert("创建文件失败:" + e);
-			LOG.error("执行创建文件-->失败:" + e);
 		}
 	}
 	/**
@@ -1200,8 +1200,8 @@ public class IndexController extends BaseController {
 			lblRunCreateAllTips.textProperty().bind(task.messageProperty());
 			new Thread(task).start();
 		} catch (Exception e) {
-			AlertUtil.showErrorAlert("创建文件失败:" + e);
 			LOG.error("执行创建-->失败:", e);
+			AlertUtil.showErrorAlert("创建文件失败:" + e);
 		}
 	}
 
@@ -1236,8 +1236,8 @@ public class IndexController extends BaseController {
 				AlertUtil.showInfoAlert("保存配置成功!");
 				LOG.debug("保存配置成功!");
 			} catch (Exception e) {
+				LOG.error("保存配置失败!!!" , e);
 				AlertUtil.showErrorAlert("保存配置失败!失败原因:\r\n" + e.getMessage());
-				LOG.error("保存配置失败!!!" + e);
 			}
 		}
 	}

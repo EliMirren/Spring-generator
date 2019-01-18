@@ -146,8 +146,8 @@ public class ConnectionController extends BaseController {
 			indexController.loadTVDataBase();
 			LOG.debug("保存数据库连接成功!");
 		} catch (Exception e) {
+			LOG.error("保存数据库连接失败!!!" , e);
 			AlertUtil.showErrorAlert(e.getMessage());
-			LOG.error("保存数据库连接失败!!!" + e);
 		}
 
 	}
@@ -178,8 +178,8 @@ public class ConnectionController extends BaseController {
 			AlertUtil.showInfoAlert("连接成功!");
 			LOG.debug("数据库测试连接成功!");
 		} catch (Exception e) {
+			LOG.error("数据库连接测试失败!!!" , e);
 			AlertUtil.showErrorAlert("连接失败" + e.getMessage());
-			LOG.error("数据库连接测试失败!!!" + e);
 		}
 	}
 
