@@ -5,7 +5,7 @@
 
 	<groupId>com.szmirren</groupId>
 	<artifactId>Spring-generator</artifactId>
-	<version>1.0.6</version>
+	<version>1.0.8</version>
 	<packaging>jar</packaging>
 
 	<name>Spring-generator</name>
@@ -38,7 +38,7 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-			<version>1.2.7</version>
+			<version>1.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.freemarker</groupId>

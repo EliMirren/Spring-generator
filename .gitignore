@@ -26,3 +26,5 @@ hs_err_pid*
 /logs/
 /target/
 /template/
+/.idea/
+/Spring-generator.iml

@@ -63,7 +63,9 @@ public class ServiceImplConfig {
 		tableItem.add(new TableAttributeKeyValue("selectById", "findOne", "通过id查询数据"));
 		tableItem.add(new TableAttributeKeyValue("insertNotNull", "saveNotNull", "插入不为空的数据"));
 		tableItem.add(new TableAttributeKeyValue("updateNotNull", "updateNotNullById", "更新不为空的数据"));
+		tableItem.add(new TableAttributeKeyValue("updateNotNullByAssist", "updateNotNullByAssist", "Assist更新不为空的数据"));
 		tableItem.add(new TableAttributeKeyValue("deleteById", "deleteById", "通过id删除数据"));
+		tableItem.add(new TableAttributeKeyValue("deleteByAssist", "deleteByAssist", "通过Assist删除数据"));
 		return this;
 	}
 

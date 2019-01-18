@@ -103,8 +103,8 @@ public class HistoryConfigController extends BaseController {
 					closeDialogStage();
 					LOG.debug("将配置信息加载到首页成功!");
 				} catch (Exception e) {
+					LOG.error("将配置信息加载到首页失败!!!" , e);
 					AlertUtil.showErrorAlert("加载配置失败!失败原因:\r\n" + e.getMessage());
-					LOG.error("将配置信息加载到首页失败!!!" + e);
 				}
 			});
 			Button button1 = new Button("删除配置");
@@ -123,8 +123,8 @@ public class HistoryConfigController extends BaseController {
 						}
 						LOG.debug("执行删除配置完成!");
 					} catch (Exception e) {
+						LOG.error("执行删除配置失败!!!" , e);
 						AlertUtil.showErrorAlert("删除失败!失败原因:\r\n" + e.getMessage());
-						LOG.error("执行删除配置失败!!!" + e);
 					}
 				}
 			});

@@ -158,8 +158,8 @@ public class UpdateConnection extends BaseController {
 			LOG.debug("修改数据库连接成功!");
 			getDialogStage().close();
 		} catch (Exception e) {
+			LOG.error("修改数据库连接失败!!!" , e);
 			AlertUtil.showErrorAlert(e.getMessage());
-			LOG.error("修改数据库连接失败!!!" + e);
 		}
 	}
 
@@ -189,8 +189,8 @@ public class UpdateConnection extends BaseController {
 			AlertUtil.showInfoAlert("连接成功!");
 			LOG.debug("数据库测试连接成功!");
 		} catch (Exception e) {
+			LOG.error("数据库连接测试失败!!!" , e);
 			AlertUtil.showErrorAlert("连接失败!原因:" + e.getMessage());
-			LOG.error("数据库连接测试失败!!!" + e);
 		}
 	}
 

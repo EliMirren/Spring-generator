@@ -322,8 +322,8 @@ public class SetEntityAttributeController extends BaseController {
 			loadTablePropertyValues(columns);
 			LOG.debug("执行获取表的列数据-->成功!");
 		} catch (Exception e) {
-			AlertUtil.showErrorAlert("获取表的列数据!失败原因:\r\n" + e.getMessage());
 			LOG.error("执行获取表的列数据-->失败:", e);
+			AlertUtil.showErrorAlert("获取表的列数据!失败原因:\r\n" + e.getMessage());
 		}
 	}
 
@@ -341,8 +341,8 @@ public class SetEntityAttributeController extends BaseController {
 				LOG.debug("获取表的主键列失败,当前表不存在主键!");
 			}
 		} catch (Exception e) {
+			LOG.error("获取表的主键列失败!!!" , e);
 			AlertUtil.showErrorAlert("获得主键失败!失败原因:\r\n" + e.getMessage());
-			LOG.error("获取表的主键列失败!!!" + e);
 		}
 
 	}

@@ -348,8 +348,8 @@ public class IndexController extends BaseController {
 			loadTVDataBase();
 			LOG.debug("加载所有数据库到左侧树集成功!");
 		} catch (Exception e1) {
+			LOG.error("加载所有数据库到左侧树集失败!!!", e1);
 			AlertUtil.showErrorAlert(e1.getMessage());
-			LOG.error("加载所有数据库到左侧树集失败!!!" + e1);
 		}
 		try {
 			// 加载首页配置信息
@@ -359,8 +359,8 @@ public class IndexController extends BaseController {
 			loadTemplate();// 获取模板文件夹中所有模板的名字
 			LOG.debug("加载配置信息到首页成功!");
 		} catch (Exception e) {
+			LOG.error("加载配置信息失败!!!", e);
 			AlertUtil.showErrorAlert("加载配置失败!失败原因:\r\n" + e.getMessage());
-			LOG.error("加载配置信息失败!!!" + e);
 		}
 	}
 
@@ -804,32 +804,40 @@ public class IndexController extends BaseController {
 		content.setEntity(entityContent);
 		// Service属性
 		ServiceConfig sc = history.getServiceConfig();
-		String serviceName = tableName != null ? serviceNamePlace.replace("{c}", StrUtil.unlineToPascal(tableName)) : txtServiceName.getText();
+		String serviceName = txtServiceName.getText().contains("{c}")
+				? serviceNamePlace.replace("{c}", StrUtil.unlineToPascal(tableName))
+				: txtServiceName.getText();
 		ServiceContent serviceContent = new ServiceContent(txtServicePackage.getText(), serviceName);
 		ConverterUtil.serviceConfigToContent(sc, serviceContent, className);
 		content.setService(serviceContent);
 		// ServiceImpl属性
 		ServiceImplConfig sci = history.getServiceImplConfig();
-		String serviceNameImplName = tableName != null
+		String serviceNameImplName = txtServiceImplName.getText().contains("{c}")
 				? serviceImplNamePlace.replace("{c}", StrUtil.unlineToPascal(tableName))
 				: txtServiceImplName.getText();
 		ServiceImplContent serviceImplContent = new ServiceImplContent(txtServiceImplPackage.getText(), serviceNameImplName);
 		ConverterUtil.serviceImplConfigToContent(sci, serviceImplContent, className);
 		content.setServiceImpl(serviceImplContent);
 		// dao属性
-		String sqlName = tableName != null ? daoNamePlace.replace("{c}", StrUtil.unlineToPascal(tableName)) : txtSqlName.getText();
+		String sqlName = txtSqlName.getText().contains("{c}")
+				? daoNamePlace.replace("{c}", StrUtil.unlineToPascal(tableName))
+				: txtSqlName.getText();
 		DaoConfig sql = history.getDaoConfig();
 		DaoContent sqlContent = new DaoContent(txtSqlPackage.getText(), sqlName);
 		ConverterUtil.SqlConfigToContent(sql, sqlContent, className);
 		content.setDao(sqlContent);
 		// Controller属性
-		String routerName = tableName != null ? routerNamePlace.replace("{c}", StrUtil.unlineToPascal(tableName)) : txtRouterName.getText();
+		String routerName = txtRouterName.getText().contains("{c}")
+				? routerNamePlace.replace("{c}", StrUtil.unlineToPascal(tableName))
+				: txtRouterName.getText();
 		ControllerConfig router = history.getControllerConfig();
 		ControllerContent routerContent = new ControllerContent(txtRouterPackage.getText(), routerName);
 		ConverterUtil.routerConfigToContent(router, routerContent, className);
 		content.setController(routerContent);
 		// 单元测试 属性
-		String testName = tableName != null ? unitTestPlace.replace("{c}", StrUtil.unlineToPascal(tableName)) : txtUnitTestName.getText();
+		String testName = txtUnitTestName.getText().contains("{c}")
+				? unitTestPlace.replace("{c}", StrUtil.unlineToPascal(tableName))
+				: txtUnitTestName.getText();
 		UnitTestConfig unit = history.getUnitTestConfig();
 		UnitTestContent unitTestContent = new UnitTestContent(txtUnitTestPackage.getText(), testName);
 		ConverterUtil.unitTestConfigToContent(unit, unitTestContent, className);
@@ -841,7 +849,9 @@ public class IndexController extends BaseController {
 		content.setAssist(assistContent);
 		// Mapper属性
 		MapperConfig mapperConfig = history.getMapperConfig();
-		String mapperName = tableName != null ? mapperNamePlace.replace("{c}", StrUtil.unlineToPascal(tableName)) : txtMapperName.getText();
+		String mapperName = txtMapperName.getText().contains("{c}")
+				? mapperNamePlace.replace("{c}", StrUtil.unlineToPascal(tableName))
+				: txtMapperName.getText();
 		MapperContent mapperContent = new MapperContent(txtMapperPackage.getText(), mapperName);
 		ConverterUtil.mapperConfigToContent(mapperConfig, mapperContent, className);
 		content.setMapper(mapperContent);

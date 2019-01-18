@@ -56,6 +56,7 @@ public class ${content.controller.className} {
 		return ${content.service.className?uncap_first}.${content.service.item.insertNotNull.value!}(value);
 	}
 	
+	<#if content.entity.primaryKeyAttr??>
 	/**
 	 * ${content.controller.item.f_updateNotNull.describe!}
 	 * @param id
@@ -65,8 +66,7 @@ public class ${content.controller.className} {
 	public String ${content.controller.item.f_updateNotNull.value!}(${content.entity.className} value) {
 		return ${content.service.className?uncap_first}.${content.service.item.updateNotNull.value!}(value);
 	}
-	
-	<#if content.entity.primaryKeyAttr??>
+
 	/**
 	 * ${content.controller.item.f_deleteById.describe!}
 	 * @param id
