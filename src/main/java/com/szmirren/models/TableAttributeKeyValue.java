@@ -1,5 +1,7 @@
 package com.szmirren.models;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -44,11 +46,10 @@ public class TableAttributeKeyValue {
 	public String getKey() {
 		return key.getValue();
 	}
-
 	public void setKey(String key) {
 		this.key.setValue(key);
 	}
-
+	@JSONField(deserialize = false)
 	public void setKey(StringProperty key) {
 		this.key = key;
 	}
@@ -60,7 +61,7 @@ public class TableAttributeKeyValue {
 	public void setValue(String value) {
 		this.value.setValue(value);
 	}
-
+	@JSONField(deserialize = false)
 	public void setValue(StringProperty value) {
 		this.value = value;
 	}
@@ -72,7 +73,7 @@ public class TableAttributeKeyValue {
 	public void setDescribe(String describe) {
 		this.describe.setValue(describe);
 	}
-
+	@JSONField(deserialize = false)
 	public void setDescribe(StringProperty describe) {
 		this.describe = describe;
 	}

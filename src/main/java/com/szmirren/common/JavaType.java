@@ -60,7 +60,7 @@ public class JavaType {
 	public static boolean isString(String str) {
 		if (str.equalsIgnoreCase("NCHAR") || str.equalsIgnoreCase("CHAR") || str.equalsIgnoreCase("NVARCHAR2")
 				|| str.equalsIgnoreCase("VARCHAR2") || str.equalsIgnoreCase("NVARCHAR") || str.equalsIgnoreCase("VARCHAR")
-				|| str.equalsIgnoreCase("DEDIUMBLOB") || str.equalsIgnoreCase("DEDIUMTEXT") || str.equalsIgnoreCase("CLOB")
+				|| str.equalsIgnoreCase("MEDIUMBLOB") || str.equalsIgnoreCase("MEDIUMTEXT") || str.equalsIgnoreCase("CLOB")
 				|| str.equalsIgnoreCase("NCLOB") || str.equalsIgnoreCase("BLOB") || str.equalsIgnoreCase("NBLOB") || str.equalsIgnoreCase("BFILE")
 				|| str.equalsIgnoreCase("XML") || str.equalsIgnoreCase("IMAGE") || str.equalsIgnoreCase("TEXT")) {
 			return true;
