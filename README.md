@@ -16,7 +16,7 @@ mvn jfx:jar
 ```
 
 # 软件使用说明
-[Spring-generator的使用帮助文档](http://duhua.gitee.io/spring-generator-doc/)<br/>
+[Spring-generator的使用帮助文档](http://mirren.gitee.io/spring-generator-doc/)<br/>
 
 # 模板仓库
 [Spring-generator的模板仓库](https://github.com/EliMirren/Spring-generator-Template)<br/>
