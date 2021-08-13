@@ -1247,7 +1247,7 @@ public class IndexController extends BaseController {
 				LOG.debug("保存配置成功!");
 			} catch (Exception e) {
 				AlertUtil.showErrorAlert("保存配置失败!失败原因:\r\n" + e.getMessage());
-				LOG.error("保存配置失败!!!" + e);
+				LOG.error("保存配置失败!!!", e);
 			}
 		}
 	}

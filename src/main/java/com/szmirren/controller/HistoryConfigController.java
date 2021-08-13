@@ -51,7 +51,7 @@ public class HistoryConfigController extends BaseController {
 			data = getHistoryConfig();
 		} catch (Exception e) {
 			tblConfigInfo.setPlaceholder(new Label("加载配置文件失败!失败原因:\r\n" + e.getMessage()));
-			LOG.error("初始化配置信息表格出现异常!!!" + e);
+			LOG.error("初始化配置信息表格出现异常!!!", e);
 		}
 
 		TableColumn<HistoryConfigCVF, String> tdInfo = new TableColumn<HistoryConfigCVF, String>("配置信息文件名");

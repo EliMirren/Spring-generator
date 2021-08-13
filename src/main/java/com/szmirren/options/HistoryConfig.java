@@ -1,5 +1,8 @@
 package com.szmirren.options;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * 配置信息
  * 
@@ -64,7 +67,10 @@ public class HistoryConfig {
 	/** 单元测试配置文件 */
 	private UnitTestConfig unitTestConfig;
 	/** 自定义包类的配置文件 */
+	@JSONField(serialize = false, deserialize = false)
 	private CustomConfig customConfig;
+	@JSONField(name = "customConfig")
+	private JSONObject customJsonConfig;
 	/** 自定义属性的配置文件 */
 	private CustomPropertyConfig customPropertyConfig;
 
@@ -318,6 +324,20 @@ public class HistoryConfig {
 
 	public void setCustomConfig(CustomConfig customConfig) {
 		this.customConfig = customConfig;
+	}
+
+	public JSONObject getCustomJsonConfig() {
+		if (this.customConfig != null) {
+			return this.customConfig.toJson();
+		}
+		return null;
+	}
+
+	public void setCustomJsonConfig(JSONObject customJsonConfig) {
+		if (customJsonConfig != null) {
+			this.customConfig = CustomConfig.fromJson(customJsonConfig);
+		}
+		this.customJsonConfig = customJsonConfig;
 	}
 
 	public CustomPropertyConfig getCustomPropertyConfig() {
